@@ -1,0 +1,25 @@
+{
+  "name": "penguin-client",
+  "version": "0.1.0",
+  "description": "React Frontend for the Penguin Privacy Engineering toolkit",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "typewatch": "tsc --noEmit --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "babel-preset-nano-react-app": "^0.1.0",
+    "typescript": "^4.7.4",
+    "vite": "^2.9.14"
+  }
+}
