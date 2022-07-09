@@ -34,7 +34,7 @@ func (b *RingBuffer) Write(s ServiceMap) {
 
 func (b *RingBuffer) WriteAt(index int, s ServiceMap) {
 	b.mu.Lock()
-	b.buf[index%b.size] = s
+	b.buf[index%b.size+b.size] = s
 	b.write = (b.write + 1) % b.size
 	b.mu.Unlock()
 }
@@ -49,7 +49,7 @@ func (b *RingBuffer) Read() ServiceMap {
 
 func (b *RingBuffer) ReadAt(index int) ServiceMap {
 	b.mu.Lock()
-	s := b.buf[index%b.size]
+	s := b.buf[index%b.size+b.size]
 	b.read = (b.read + 1) % b.size
 	b.mu.Unlock()
 	return s
