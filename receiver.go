@@ -114,6 +114,8 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 			serviceMap.AddPathEdge(rootSpanName, s.name, serviceName, attr)
 		}
 
+		log.Printf("%+v", spanMap)
+
 		a.rb.Write(serviceMap)
 		writer.WriteHeader(http.StatusOK)
 	})
