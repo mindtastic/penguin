@@ -2,25 +2,30 @@ package main
 
 import (
 	"bytes"
+	"go.opentelemetry.io/collector/pdata/pcommon"
 	"go.opentelemetry.io/collector/pdata/ptrace"
+	conventions "go.opentelemetry.io/collector/semconv/v1.6.1"
 	"log"
 	"net/http"
-	"strconv"
-	"strings"
-	"sync"
 )
 
-type receiver struct {
-	Host string
-	um   ptrace.Unmarshaler
-	init sync.Once
+const (
+	attrCategories          = "tilt.categories"
+	attrLegalBases          = "tilt.legal_bases"
+	attrLegitimateInterests = "tilt.legitimate_interests"
+	attrStorages            = "tilt.storage_durations"
+	attrPurposes            = "tilt.purposes"
+	attrAutomatedDecision   = "tilt.automated_decision_making"
+)
+
+type serviceSpan struct {
+	span ptrace.Span
+	name string
+	root bool
 }
 
-func (r *receiver) TraceHandler() http.HandlerFunc {
-	r.init.Do(func() {
-		r.um = ptrace.NewProtoUnmarshaler()
-	})
-
+func (a *appServer) TraceHandler() http.HandlerFunc {
+	um := ptrace.NewProtoUnmarshaler()
 	var handler = http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
 		body := bytes.Buffer{}
 
@@ -31,36 +36,85 @@ func (r *receiver) TraceHandler() http.HandlerFunc {
 			return
 		}
 		request.Body.Close()
-		tt, err := r.um.UnmarshalTraces(body.Bytes())
+		tt, err := um.UnmarshalTraces(body.Bytes())
 		if err != nil {
 			log.Printf("error unmarshaling traces: %v", err)
 			writer.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
-		for i := 0; i < tt.ResourceSpans().Len(); i++ {
-			e := tt.ResourceSpans().At(i)
-			r := e.Resource()
-			v, ok := r.Attributes().Get("service.name")
-			if !ok {
-				log.Printf(`could not find resource attribute "service.name"`)
-				continue
-			}
-			serviceName := v.AsString()
-			if !strings.HasPrefix(serviceName, "benchd-worker") {
-				continue
-			}
-			c := strings.Split(serviceName, ".")
-			if len(c) != 3 {
-				log.Printf(`malformed service.name attribute "%s"`, serviceName)
-			}
-			id, err := strconv.Atoi(c[2])
-			if err != nil {
-				log.Printf(`malformed id in service.name attribute "%s"`, serviceName)
-				continue
+		serviceMap := NewServiceMap()
+		spanMap := map[string]serviceSpan{}
+		var rootSpanName string
 
+		rss := tt.ResourceSpans()
+		for i := 0; i < rss.Len(); i++ {
+			rs := rss.At(i)
+			resource := rs.Resource()
+
+			name, ok := resource.Attributes().Get(conventions.AttributeServiceName)
+			if !ok {
+				continue
+			}
+			serviceName := name.AsString()
+			serviceMap.AddNode(serviceName)
+
+			ilss := rs.ScopeSpans()
+			for j := 0; j < ilss.Len(); j++ {
+				ils := ilss.At(j)
+				spans := ils.Spans()
+				for k := 0; k < spans.Len(); k++ {
+					span := spans.At(k)
+					parent := span.ParentSpanID()
+					root := false
+					if parent.IsEmpty() {
+						rootSpanName = span.Name()
+						root = true
+					}
+					spanMap[span.SpanID().HexString()] = serviceSpan{
+						span: span,
+						name: serviceName,
+						root: root,
+					}
+				}
 			}
 		}
+
+		for _, serviceSpan := range spanMap {
+			serviceName := serviceSpan.name
+			isRoot := serviceSpan.root
+			parent := serviceSpan.span.ParentSpanID()
+
+			s, ok := spanMap[parent.HexString()]
+			if !ok && !isRoot {
+				continue
+			}
+			attributeSpan := s.span
+			if isRoot {
+				attributeSpan = serviceSpan.span
+			}
+
+			attr := make(map[string][]string)
+			attributeSpan.Attributes().Range(func(k string, val pcommon.Value) bool {
+				attr[k] = make([]string, 0)
+				switch val.Type() {
+				case pcommon.ValueTypeSlice:
+					sl := val.SliceVal()
+					for i := 0; i <= sl.Len(); i++ {
+						v := sl.At(i)
+						attr[k] = append(attr[k], v.AsString())
+					}
+				default:
+					sl := val.AsString()
+					attr[k] = append(attr[k], sl)
+				}
+				return true
+			})
+
+			serviceMap.AddPathEdge(rootSpanName, s.name, serviceName, attr)
+		}
+
+		a.rb.Write(serviceMap)
 		writer.WriteHeader(http.StatusOK)
 	})
 

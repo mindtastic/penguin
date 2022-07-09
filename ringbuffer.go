@@ -2,36 +2,51 @@ package main
 
 import "sync"
 
-type MapBuffer struct {
+type RingBuffer struct {
 	mu    sync.RWMutex
-	buf   []*ServiceMap
+	buf   []ServiceMap
 	size  int
 	read  int
 	write int
 }
 
-func NewBuffer(size int) *MapBuffer {
-	return &MapBuffer{
-		buf:  make([]*ServiceMap, 0, size),
+func NewBuffer(size int) *RingBuffer {
+	return &RingBuffer{
+		buf:  make([]ServiceMap, size),
 		size: size,
 	}
 }
 
-func (b *MapBuffer) WriteAt(index int, s *ServiceMap) {
+func (b *RingBuffer) Len() int {
+	return b.write % b.size
+}
+
+func (b *RingBuffer) Write(s ServiceMap) {
 	b.mu.Lock()
-	b.write = index % b.size
-	b.append(s)
+	b.buf[b.write] = s
+	b.write = (b.write + 1) % b.size
 	b.mu.Unlock()
 }
 
-func (b *MapBuffer) append(s *ServiceMap) {
-	b.buf[b.write] = s
+func (b *RingBuffer) WriteAt(index int, s ServiceMap) {
+	b.mu.Lock()
+	b.buf[index%b.size] = s
+	b.write = (b.write + 1) % b.size
+	b.mu.Unlock()
 }
 
-func (b *MapBuffer) ReadAt(index int) *ServiceMap {
+func (b *RingBuffer) Read() ServiceMap {
 	b.mu.Lock()
-	b.read = index % b.size
 	s := b.buf[b.read]
+	b.read = (b.read + 1) % b.size
+	b.mu.Unlock()
+	return s
+}
+
+func (b *RingBuffer) ReadAt(index int) ServiceMap {
+	b.mu.Lock()
+	s := b.buf[index%b.size]
+	b.read = (b.read + 1) % b.size
 	b.mu.Unlock()
 	return s
 }
