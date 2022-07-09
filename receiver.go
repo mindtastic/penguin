@@ -83,16 +83,13 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 		for _, serviceSpan := range spanMap {
 			serviceName := serviceSpan.name
 			isRoot := serviceSpan.root
-			parent := serviceSpan.span.ParentSpanID()
+			parentSpanID := serviceSpan.span.ParentSpanID()
 
-			s, ok := spanMap[parent.HexString()]
+			parent, ok := spanMap[parentSpanID.HexString()]
 			if !ok && !isRoot {
 				continue
 			}
-			attributeSpan := s.span
-			if isRoot {
-				attributeSpan = serviceSpan.span
-			}
+			attributeSpan := serviceSpan.span
 
 			attr := make(map[string][]string)
 			attributeSpan.Attributes().Range(func(k string, val pcommon.Value) bool {
@@ -111,7 +108,7 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 				return true
 			})
 
-			serviceMap.AddPathEdge(rootSpanName, s.name, serviceName, attr)
+			serviceMap.AddPathEdge(rootSpanName, parent.name, serviceName, attr)
 		}
 
 		log.Printf("%+v", spanMap)

@@ -40,11 +40,12 @@ func (s *ServiceMap) AddPathEdge(path, from, to string, attr map[string][]string
 	for k, v := range s.Edges {
 		if v.From == from && v.To == to {
 			s.Edges[k].Attributes = mergeAttributes(v.Attributes, attr)
+
 			return
 		}
 	}
 	e := Edge{From: from, To: to, Attributes: attr}
-	s.Edges = appendEdgeUnique(s.Edges, e)
+	s.Edges = append(s.Edges, e)
 	p, ok := s.Paths[path]
 	if !ok {
 		s.Paths[path] = Path{
@@ -116,7 +117,7 @@ func appendEdgeUnique(into []Edge, add ...Edge) []Edge {
 	for i, a := range add {
 		found := false
 		for _, v := range into {
-			if a.From == v.From || a.To == v.To {
+			if a.From == v.From && a.To == v.To {
 				ret[i].Attributes = mergeAttributes(a.Attributes, v.Attributes)
 				found = true
 				break
