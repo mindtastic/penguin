@@ -21,6 +21,10 @@ func (b *RingBuffer) Len() int {
 	return b.write % b.size
 }
 
+func (b *RingBuffer) Size() int {
+	return b.size
+}
+
 func (b *RingBuffer) Write(s ServiceMap) {
 	b.mu.Lock()
 	b.buf[b.write] = s

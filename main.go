@@ -42,7 +42,7 @@ func (a *appServer) handleServiceMap() http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		serviceMap := NewServiceMap()
 
-		for i := 0; i <= a.rb.Len(); i++ {
+		for i := 0; i <= a.rb.Size(); i++ {
 			m := a.rb.ReadAt(i)
 			serviceMap.Join(m)
 		}
