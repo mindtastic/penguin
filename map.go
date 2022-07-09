@@ -34,7 +34,7 @@ type Edge struct {
 }
 
 func (s *ServiceMap) AddPathEdge(path, from, to string, attr map[string][]string) {
-	if from == "" || to == "" || path == "" || from == to {
+	if from == "" || to == "" || path == "" {
 		return
 	}
 	for k, v := range s.Edges {
