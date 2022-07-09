@@ -37,6 +37,7 @@ func main() {
 	mux.Handle("/", http.FileServer(http.FS(static)))
 	a.s.Handler = mux
 
+	log.Printf("listening on %s", *addr)
 	log.Fatalf("error serving: %v", a.s.ListenAndServe())
 }
 
