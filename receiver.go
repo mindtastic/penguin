@@ -97,7 +97,7 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 				switch val.Type() {
 				case pcommon.ValueTypeSlice:
 					sl := val.SliceVal()
-					for i := 0; i <= sl.Len(); i++ {
+					for i := 0; i < sl.Len(); i++ {
 						v := sl.At(i)
 						attr[k] = append(attr[k], v.AsString())
 					}
