@@ -17,16 +17,18 @@ var buffSize = flag.Duration("lookback", 5*time.Minute, "time to look look into 
 var static embed.FS
 
 type appServer struct {
-	rb *RingBuffer
-	s  http.Server
+	rb        *RingBuffer
+	s         http.Server
+	startTime time.Time
 }
 
 func main() {
 	flag.Parse()
 
 	a := appServer{
-		rb: NewBuffer(int((*buffSize).Milliseconds() / 1000)), // One slot for every second.
-		s:  http.Server{Addr: *addr},
+		rb:        NewBuffer(int((*buffSize).Milliseconds() / 1000)), // One slot for every second.
+		s:         http.Server{Addr: *addr},
+		startTime: time.Now(),
 	}
 
 	mux := &http.ServeMux{}
@@ -44,6 +46,9 @@ func (a *appServer) handleServiceMap() http.HandlerFunc {
 
 		for i := 0; i <= a.rb.Size(); i++ {
 			m := a.rb.ReadAt(i)
+			if m.Paths == nil {
+				continue
+			}
 			serviceMap.Join(m)
 		}
 

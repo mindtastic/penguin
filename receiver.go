@@ -7,15 +7,7 @@ import (
 	conventions "go.opentelemetry.io/collector/semconv/v1.6.1"
 	"log"
 	"net/http"
-)
-
-const (
-	attrCategories          = "tilt.categories"
-	attrLegalBases          = "tilt.legal_bases"
-	attrLegitimateInterests = "tilt.legitimate_interests"
-	attrStorages            = "tilt.storage_durations"
-	attrPurposes            = "tilt.purposes"
-	attrAutomatedDecision   = "tilt.automated_decision_making"
+	"time"
 )
 
 type serviceSpan struct {
@@ -46,6 +38,7 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 		serviceMap := NewServiceMap()
 		spanMap := map[string]serviceSpan{}
 		var rootSpanName string
+		var rootEndTimestamp time.Time
 
 		rss := tt.ResourceSpans()
 		for i := 0; i < rss.Len(); i++ {
@@ -69,6 +62,7 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 					root := false
 					if parent.IsEmpty() {
 						rootSpanName = span.Name()
+						rootEndTimestamp = span.EndTimestamp().AsTime()
 						root = true
 					}
 					spanMap[span.SpanID().HexString()] = serviceSpan{
@@ -113,7 +107,8 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 
 		log.Printf("%+v", spanMap)
 
-		a.rb.Write(serviceMap)
+		seconds := int(rootEndTimestamp.Sub(a.startTime).Milliseconds() / 1000)
+		a.rb.WriteAt(seconds, serviceMap)
 		writer.WriteHeader(http.StatusOK)
 	})
 
