@@ -4,19 +4,21 @@ import { animateNodes } from 'sigma/utils/animate';
 import { useLayoutNoverlap } from '@react-sigma/layout-noverlap';
 // eslint-disable-next-line import/no-named-as-default
 import buildGraphFromTraces from './graphBuilder';
-import API from '../api';
+import { ServiceMap } from './types';
 
-export function ServiceMapGraph() {
+type ServiceMapGraphProps = {
+  serviceMap: ServiceMap
+};
+
+export function ServiceMapGraph(props: ServiceMapGraphProps) {
+  const { serviceMap } = props;
   const sigma = useSigma();
-  const { positions, assign } = useLayoutNoverlap();
+  const { positions } = useLayoutNoverlap();
 
   const loadGraph = useLoadGraph();
 
   useEffect(() => {
-    const map = API.fetchServiceMap();
-
-    const graph = buildGraphFromTraces(map);
-
+    const graph = buildGraphFromTraces(serviceMap);
     loadGraph(graph);
   }, [loadGraph]);
 

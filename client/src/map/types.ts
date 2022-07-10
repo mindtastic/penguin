@@ -22,8 +22,8 @@ export interface ServiceMap {
   Paths: Record<string, Paths>;
 }
 
-export const emptyServiceMap: ServiceMap = {
+export const emptyServiceMap = {
   Nodes: [],
   Edges: [],
   Paths: {},
-};
+} as ServiceMap;
