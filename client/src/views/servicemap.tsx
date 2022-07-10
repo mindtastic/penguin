@@ -16,14 +16,14 @@ export default function ServiceMapPage() {
     setServiceMap(map);
   });
 
-  // const mapProps = {
-  //   ...(dimensions && dimensions.paddingBox.height > 0 && { height: `${dimensions.paddingBox.height}px` }),
-  //   ...(dimensions && { width: `${dimensions.paddingBox.width}px` }),
-  // };
+  const mapProps = {
+    ...(dimensions && dimensions.contentBox.height > 0 && { height: dimensions.contentBox.height }),
+    ...(dimensions && dimensions.contentBox.width > 0 && { width: dimensions.contentBox.width }),
+  };
 
   return (
-    <Box ref={containerRef} minH="100v" width="100%">
-      <ServiceMap />
+    <Box ref={containerRef} minH="100vh" width="100%" p={50}>
+      <ServiceMap serviceMap={serviceMap} width={mapProps.width} height={mapProps.height} />
     </Box>
   );
 }

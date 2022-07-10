@@ -6,20 +6,27 @@ import '@react-sigma/core/lib/react-sigma.min.css';
 import { LayoutNoverlapControl } from '@react-sigma/layout-noverlap';
 // eslint-disable-next-line import/no-named-as-default
 import ServiceMapGraph from './ServiceMapGraph';
+import { ServiceMap as ServiceMapType } from './types';
 
 export interface ServiceMapProps {
-  width?: string;
-  height?: string;
+  serviceMap: ServiceMapType;
+  width?: number;
+  height?: number;
 }
-const defaultProps: ServiceMapProps = { width: '500px', height: '500px' };
+const defaultProps: ServiceMapProps = { width: 500, height: 500 };
 
 export function ServiceMap(props: ServiceMapProps) {
-  const { width, height } = { ...defaultProps, ...props };
-  console.log(width, height);
+  const { serviceMap, width, height } = { ...defaultProps, ...props };
+
+  const cssHeight = (height && height > 0) ? `${height}px` : `${defaultProps.height}px`;
+  const cssWidth = (width && width > 0) ? `${width}px` : `${defaultProps.width}px`;
 
   return (
-    <SigmaContainer style={{ width, height }}>
-      <ServiceMapGraph />
+    <SigmaContainer
+      style={{ height: cssHeight, width: cssWidth }}
+      initialSettings={{ allowInvalidContainer: true }}
+    >
+      <ServiceMapGraph serviceMap={serviceMap} />
       <ControlsContainer position="bottom-right">
         <LayoutNoverlapControl />
       </ControlsContainer>
