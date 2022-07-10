@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Flex, SimpleGrid } from '@chakra-ui/react';
 import api from '../api';
+import { emptyServiceMap } from '../map/types';
 
 export default function Annotations() {
-  const [serviceMap, setServiceMap] = useState({ Edges: [], Nodes: [], Paths: {} });
+  const [serviceMap, setServiceMap] = useState(emptyServiceMap);
 
   useEffect(() => {
     const map = api.fetchServiceMap();
