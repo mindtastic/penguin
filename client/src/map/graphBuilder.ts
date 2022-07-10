@@ -11,12 +11,12 @@ export const buildGraphFromTraces = (serviceMap: ServiceMap) => {
       x: 0,
       y: 0,
       label: n.Name,
-      size: 10,
+      size: 15,
     });
   });
 
   serviceMap.Edges.forEach((e, idx) => {
-    graph.addDirectedEdgeWithKey(idx.toString(), e.From, e.To);
+    graph.addEdgeWithKey(idx.toString(), e.To, e.From, { size: 5 });
   });
 
   return graph;

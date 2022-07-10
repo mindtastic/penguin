@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Select, Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
+import {
+  Select, Box, Flex, SimpleGrid, Text,
+} from '@chakra-ui/react';
 import api from '../api';
 import { emptyServiceMap } from '../map/types';
 
 export default function Annotations() {
   const [serviceMap, setServiceMap] = useState(emptyServiceMap);
-  const [selectedPath, setSelectedPath] = useState("");
+  const [selectedPath, setSelectedPath] = useState('');
 
   const handleChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedPath(event.target.value)
+    setSelectedPath(event.target.value);
   };
 
   useEffect(() => {
@@ -25,13 +27,13 @@ export default function Annotations() {
       >
         <Select
           onChange={handleChange}
-          value={selectedPath}>
-        {Object.keys(serviceMap.Paths).concat([""]).map((option) => (
-              <option value={option}>{option}</option>
-            ))}
+          value={selectedPath}
+        >
+          {Object.keys(serviceMap.Paths).concat(['']).map((option) => (
+            <option value={option}>{option}</option>
+          ))}
         </Select>
-        <Text>{selectedPath}</Text>
-        <Flex />
+        
       </SimpleGrid>
     </Box>
   );

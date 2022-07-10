@@ -38,7 +38,6 @@ export function ServiceMapGraph(props: ServiceMapGraphProps) {
       ...obj,
     }), {});
     const attributesList = Object.keys(attributeKeys);
-
     sigma.getGraph().edges()
       .map((id) => parseInt(id, 10))
       .map(((edgeId) => serviceMap.Edges[edgeId].Attributes))
@@ -49,12 +48,12 @@ export function ServiceMapGraph(props: ServiceMapGraphProps) {
       .filter((o) => o.arr.length > 0)
       .forEach((res) => {
         const edge = res.id.toString();
-        console.log(edge);
-        const label = res.arr.map((a) => {
-          return `${startCase(attributeKeys[a[0]])}: ${a[1].join(', ')}`;
-        }).join('\n');
-        console.log(label);
-        graph.setEdgeAttribute(edge, 'label', label);
+        const label = res.arr.map((a) => `${startCase(attributeKeys[a[0]])}: ${a[1].join(',\n')}`).join('\n');
+        console.log(edge, label);
+        graph.updateEachEdgeAttributes((edgeToUpdate, attr) => ({
+          ...attr,
+          label,
+        }));
       });
   }, [attributesToShow]);
 
