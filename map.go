@@ -65,8 +65,8 @@ type Path struct {
 
 func (s *ServiceMap) Join(maps ...ServiceMap) {
 	for _, m := range maps {
-		s.Nodes = append(m.Nodes)
-		s.Edges = append(m.Edges)
+		s.Nodes = append(s.Nodes, m.Nodes...)
+		s.Edges = appendEdgeUnique(s.Edges, m.Edges...)
 		for k, path := range m.Paths {
 			v, ok := s.Paths[k]
 			if !ok {
