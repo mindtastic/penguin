@@ -6,6 +6,7 @@ import (
 	"go.opentelemetry.io/collector/pdata/ptrace"
 	conventions "go.opentelemetry.io/collector/semconv/v1.6.1"
 	"log"
+	"math"
 	"net/http"
 	"time"
 )
@@ -105,7 +106,7 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 			serviceMap.AddPathEdge(rootSpanName, parent.name, serviceName, attr)
 		}
 
-		seconds := int(rootEndTimestamp.Sub(a.startTime).Milliseconds() / 1000)
+		seconds := int(math.Abs(rootEndTimestamp.Sub(a.startTime).Seconds()))
 		a.rb.WriteAt(seconds, serviceMap)
 		log.Printf("wrote servicemap with %d edges to postion %d (%d)", len(serviceMap.Edges), (seconds+a.rb.Size())%a.rb.Size(), seconds)
 		writer.WriteHeader(http.StatusOK)
