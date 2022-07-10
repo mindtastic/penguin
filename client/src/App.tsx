@@ -16,10 +16,6 @@ export default function App() {
     toggleSidebar, setSidebarState,
   }), [false]);
 
-
-
-
-
   const width = { base: '100%', xl: 'calc(100% - 290px)' };
 
   const getRoutes = (r: Array<PenguinRoute>) => (
