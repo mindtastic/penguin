@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, SimpleGrid } from '@chakra-ui/react';
+import { Select, Box, Flex, SimpleGrid } from '@chakra-ui/react';
 import api from '../api';
 import { emptyServiceMap } from '../map/types';
 
 export default function Annotations() {
   const [serviceMap, setServiceMap] = useState(emptyServiceMap);
+  const [selectedPath, setSelectedPath] = useState("");
+
+  const handleChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPath(event.target.value)
+  };
 
   useEffect(() => {
     const map = api.fetchServiceMap();
@@ -18,6 +23,13 @@ export default function Annotations() {
         columns={{ sm: 1, md: 2 }}
         spacing={{ base: '20px', xl: '20px' }}
       >
+        <Select
+          onChange={handleChange}
+          value={selectedPath}>
+        {Object.keys(serviceMap.Paths).concat([""]).map((option) => (
+              <option value={option}>{option}</option>
+            ))}
+        </Select>
         <Flex />
       </SimpleGrid>
     </Box>
