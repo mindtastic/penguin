@@ -105,7 +105,7 @@ func (a *appServer) TraceHandler() http.HandlerFunc {
 			serviceMap.AddPathEdge(rootSpanName, parent.name, serviceName, attr)
 		}
 
-		seconds := int(rootEndTimestamp.Sub(a.startTime).Seconds())
+		seconds := int(rootEndTimestamp.Sub(a.startTime).Milliseconds() / 1000)
 		a.rb.WriteAt(seconds, serviceMap)
 		log.Printf("wrote servicemap with %d edges to postion %d (%d)", len(serviceMap.Edges), (seconds+a.rb.Size())%a.rb.Size(), seconds)
 		writer.WriteHeader(http.StatusOK)
