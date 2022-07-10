@@ -2,8 +2,7 @@ import React, { JSXElementConstructor, ReactNode } from 'react';
 
 import { AttachmentIcon, AtSignIcon } from '@chakra-ui/icons';
 import Annotations from './views/annotations';
-// eslint-disable-next-line import/no-named-as-default
-import ServiceMap from './map/servicemap';
+import ServiceMapPage from './views/servicemap';
 
 export interface PenguinRoute {
   name: string;
@@ -23,7 +22,7 @@ const routes: Array<PenguinRoute> = [
     name: 'Service Map',
     path: '/services',
     icon: <AtSignIcon />,
-    component: ServiceMap,
+    component: ServiceMapPage,
   },
 ];
 
