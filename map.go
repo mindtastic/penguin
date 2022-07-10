@@ -24,7 +24,7 @@ func (s *ServiceMap) AddNode(name string) {
 			return
 		}
 	}
-	s.Nodes = append(s.Nodes, Node{Name: name})
+	s.Nodes = appendNodeUnique(s.Nodes, Node{Name: name})
 }
 
 type Edge struct {
@@ -65,7 +65,7 @@ type Path struct {
 
 func (s *ServiceMap) Join(maps ...ServiceMap) {
 	for _, m := range maps {
-		s.Nodes = append(s.Nodes, m.Nodes...)
+		s.Nodes = appendNodeUnique(s.Nodes, m.Nodes...)
 		s.Edges = appendEdgeUnique(s.Edges, m.Edges...)
 		for k, path := range m.Paths {
 			v, ok := s.Paths[k]
@@ -101,6 +101,23 @@ func appendStringUnique(into []string, add ...string) []string {
 		found := false
 		for _, v := range into {
 			if a == v {
+				found = true
+				break
+			}
+		}
+		if !found {
+			ret = append(ret, a)
+		}
+	}
+	return ret
+}
+
+func appendNodeUnique(into []Node, add ...Node) []Node {
+	ret := into
+	for _, a := range add {
+		found := false
+		for _, v := range into {
+			if a.Name == v.Name {
 				found = true
 				break
 			}
