@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Select, Box, Flex, SimpleGrid } from '@chakra-ui/react';
+import { Select, Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import api from '../api';
 import { emptyServiceMap } from '../map/types';
 
@@ -30,6 +30,7 @@ export default function Annotations() {
               <option value={option}>{option}</option>
             ))}
         </Select>
+        <Text>{selectedPath}</Text>
         <Flex />
       </SimpleGrid>
     </Box>
