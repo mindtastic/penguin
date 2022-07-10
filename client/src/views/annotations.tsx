@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Flex, SimpleGrid } from '@chakra-ui/react';
+import api from '../api';
+import { emptyServiceMap } from '../map/types';
 
 export default function Annotations() {
+  const [serviceMap, setServiceMap] = useState(emptyServiceMap);
+
+  useEffect(() => {
+    const map = api.fetchServiceMap();
+    setServiceMap(map);
+  });
+
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
       <SimpleGrid

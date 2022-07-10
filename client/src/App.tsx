@@ -1,5 +1,10 @@
 import { Box } from '@chakra-ui/react';
-import React, { createContext, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import routes, { PenguinRoute } from './routes';
@@ -10,6 +15,10 @@ export default function App() {
   const providerValue = useMemo(() => ({
     toggleSidebar, setSidebarState,
   }), [false]);
+
+
+
+
 
   const width = { base: '100%', xl: 'calc(100% - 290px)' };
 

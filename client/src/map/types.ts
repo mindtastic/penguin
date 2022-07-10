@@ -21,3 +21,9 @@ export interface ServiceMap {
   Edges: Edge[];
   Paths: Record<string, Paths>;
 }
+
+export const emptyServiceMap: ServiceMap = {
+  Nodes: [],
+  Edges: [],
+  Paths: {},
+};
