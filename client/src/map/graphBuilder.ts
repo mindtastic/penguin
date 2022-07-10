@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-return */
 import { MultiDirectedGraph } from 'graphology';
+import { snakeCase } from 'lodash';
 import { ServiceMap } from './types';
 
 export const buildGraphFromTraces = (serviceMap: ServiceMap) => {
@@ -15,8 +16,7 @@ export const buildGraphFromTraces = (serviceMap: ServiceMap) => {
   });
 
   serviceMap.Edges.forEach((e, idx) => {
-    // const dir = e.attributes.get('direction');
-    graph.addEdgeWithKey(idx.toString(), e.From, e.To);
+    graph.addDirectedEdgeWithKey(idx.toString(), e.From, e.To);
   });
 
   return graph;
