@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
-import React, { useState } from 'react';
+import React from 'react';
+import { MultiDirectedGraph } from 'graphology';
 import { ControlsContainer, SigmaContainer } from '@react-sigma/core';
 import '@react-sigma/core/lib/react-sigma.min.css';
 // eslint-disable-next-line import/no-named-as-default
@@ -7,7 +8,8 @@ import { LayoutNoverlapControl } from '@react-sigma/layout-noverlap';
 // eslint-disable-next-line import/no-named-as-default
 import ServiceMapGraph from './ServiceMapGraph';
 import { ServiceMap as ServiceMapType } from './types';
-import { MultiDirectedGraph } from 'graphology';
+
+import DraggableNodeProvider from './DraggableNodeProvider';
 
 export interface ServiceMapProps {
   serviceMap: ServiceMapType;
@@ -36,12 +38,16 @@ export function ServiceMap(props: ServiceMapProps) {
         allowInvalidContainer: true,
         enableEdgeHoverEvents: true,
         renderEdgeLabels: true,
+        edgeLabelColor: {
+          color: 'black',
+        },
       }}
     >
       <ServiceMapGraph
         serviceMap={serviceMap}
         attributesToShow={attributesToShow}
       />
+      <DraggableNodeProvider />
       <ControlsContainer position="bottom-right">
         <LayoutNoverlapControl />
       </ControlsContainer>

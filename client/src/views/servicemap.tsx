@@ -66,7 +66,7 @@ export default function ServiceMapPage() {
       <HStack>
         <Menu closeOnSelect={false}>
           <MenuButton as={Button} colorScheme="blue">
-            Transparancy properties
+            Transparency properties
           </MenuButton>
           <MenuList>
             <MenuGroup title="Transparency properties">
