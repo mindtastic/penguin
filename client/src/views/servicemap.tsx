@@ -9,6 +9,7 @@ import {
   MenuItem,
   MenuList,
   MenuItemOption,
+  HStack,
 } from '@chakra-ui/react';
 import { startCase } from 'lodash';
 // eslint-disable-next-line import/no-named-as-default
@@ -62,16 +63,27 @@ export default function ServiceMapPage() {
           height={mapProps.height}
         />
       </Box>
-      <Menu closeOnSelect={false}>
-        <MenuButton as={Button} colorSchema="blue">
-          Transparancy properties
-        </MenuButton>
-        <MenuList>
-          <MenuGroup title="Transparency properties">
-            {transparencyOptions}
-          </MenuGroup>
-        </MenuList>
-      </Menu>
+      <HStack>
+        <Menu closeOnSelect={false}>
+          <MenuButton as={Button} colorScheme="blue">
+            Transparancy properties
+          </MenuButton>
+          <MenuList>
+            <MenuGroup title="Transparency properties">
+              {transparencyOptions}
+            </MenuGroup>
+          </MenuList>
+        </Menu>
+        <Menu closeOnSelect={false}>
+          <MenuButton as={Button} colorScheme="pink">
+            Paths
+          </MenuButton>
+          <MenuList>
+            <MenuItem>Path 1</MenuItem>
+            <MenuItem>Path 1</MenuItem>
+          </MenuList>
+        </Menu>
+      </HStack>
     </Box>
   );
 }
