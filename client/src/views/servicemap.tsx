@@ -10,6 +10,7 @@ import {
   MenuList,
   MenuItemOption,
   HStack,
+  MenuOptionGroup,
 } from '@chakra-ui/react';
 import { startCase } from 'lodash';
 // eslint-disable-next-line import/no-named-as-default
@@ -24,6 +25,7 @@ export default function ServiceMapPage() {
 
   const [serviceMap, setServiceMap] = useState(emptyServiceMap);
   const [tiltProperties, setTiltProperties] = useState(['']);
+  const [selectedPath, setSelectedPath] = useState('');
 
   useEffect(() => {
     const map = api.fetchServiceMap();
@@ -53,12 +55,17 @@ export default function ServiceMapPage() {
       </MenuItemOption>
     ));
 
+  const pathItemKeys = Object.keys(serviceMap.Paths).concat('').map((pathKey) => (
+    <MenuItemOption value={pathKey} key={`pathItems-${pathKey}`}>{pathKey}</MenuItemOption>
+  ));
+
   return (
     <Box height="100vh" width="100%">
       <Box ref={containerRef} height="90%" width="100%" p={50}>
         <ServiceMap
           serviceMap={serviceMap}
           attributesToShow={tiltProperties}
+          hightlightPath={selectedPath}
           width={mapProps.width}
           height={mapProps.height}
         />
@@ -79,8 +86,9 @@ export default function ServiceMapPage() {
             Paths
           </MenuButton>
           <MenuList>
-            <MenuItem>Path 1</MenuItem>
-            <MenuItem>Path 1</MenuItem>
+            <MenuOptionGroup type="radio" value={selectedPath} onChange={(v) => setSelectedPath(v)}>
+              {pathItemKeys}
+            </MenuOptionGroup>
           </MenuList>
         </Menu>
       </HStack>

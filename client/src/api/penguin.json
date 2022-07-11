@@ -4,28 +4,28 @@
       "Name": "traefik"
     },
     {
-      "Name": "kratos-proxy"
+      "Name": "traefik-proxy"
+    },
+    {
+      "Name": "wiki-service-proxy"
     },
     {
       "Name": "koda-proxy"
     },
     {
-      "Name": "traefik-proxy"
+      "Name": "mood-diary-proxy"
+    },
+    {
+      "Name": "kratos-proxy"
+    },
+    {
+      "Name": "bouncer-proxy"
     },
     {
       "Name": "motivator-service-proxy"
     },
     {
-      "Name": "mood-diary-proxy"
-    },
-    {
-      "Name": "kagami-proxy"
-    },
-    {
       "Name": "user-service-proxy"
-    },
-    {
-      "Name": "wiki-service-proxy"
     }
   ],
   "Edges": [
@@ -38,166 +38,115 @@
           "inbound"
         ],
         "http.authority": [
-          "wiki.api.dev.mindtastic.lol",
           "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+          "auth.api.dev.mindtastic.lol",
           "koda.koda.svc.cluster.local:4133",
           "diary.api.dev.mindtastic.lol",
-          "auth.api.dev.mindtastic.lol",
-          "motivator.api.dev.mindtastic.lol"
+          "kratos-public.kratos.svc.cluster.local"
         ],
         "http.host": [
-          "10.11.2.34:9000",
-          "wiki.api.dev.mindtastic.lol",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "koda.koda.svc.cluster.local:4133",
-          "diary.api.dev.mindtastic.lol",
+          "10.11.2.3:9000",
           "auth.api.dev.mindtastic.lol",
-          "motivator.api.dev.mindtastic.lol"
+          "motivator.api.dev.mindtastic.lol",
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+          "kratos-public.kratos.svc.cluster.local",
+          "koda.koda.svc.cluster.local:4133",
+          "diary.api.dev.mindtastic.lol"
         ],
         "http.method": [
           "GET",
           "POST"
         ],
         "http.path": [
-          "/wiki",
           "/decisions",
+          "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+          "/sessions/whoami",
+          "/tilt/self-service/registration/browser",
           "/",
           "/diary",
-          "/tilt/sessions/whoami",
-          "/moodivator"
+          "/tilt/sessions/whoami"
         ],
         "http.status_code": [
           "200",
+          "401",
+          "204",
           "404"
         ],
         "http.url": [
-          "/ping"
+          "/ping",
+          "/sessions/whoami",
+          "/motivator",
+          "/moodivator"
         ],
         "opencensus.same_process_as_parent_span": [
-          "false",
-          "true"
+          "true",
+          "false"
+        ],
+        "tilt.categories": [
+          "Diary entry"
+        ],
+        "tilt.legal_bases": [
+          "GDPR-99-1-a",
+          "GDPR-99-2-b"
         ],
         "tilt.legitimate_interests": [
-          "[]"
+          "[]",
+          "[true true]"
+        ],
+        "tilt.purposes": [
+          "Mood",
+          "Mood"
+        ],
+        "tilt.storage_durations": [
+          "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
+          "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
         ],
         "traefik.router.name": [
-          "ping@internal"
+          "ping@internal",
+          "websecure-kratos-public-kratos-auth-api-dev-mindtastic-lol@kubernetes",
+          "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
         ],
         "traefik.service.name": [
-          "ping@internal"
+          "ping@internal",
+          "kratos-kratos-public-http-public",
+          "motivator-service-motivator-service-5001"
         ]
       }
     },
     {
       "From": "traefik-proxy",
-      "To": "kratos-proxy",
+      "To": "wiki-service-proxy",
       "Attributes": {
         "direction": [
-          "outbound",
           "inbound"
         ],
         "http.authority": [
-          "wiki.api.dev.mindtastic.lol",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "koda.koda.svc.cluster.local:4133",
-          "diary.api.dev.mindtastic.lol",
           "auth.api.dev.mindtastic.lol",
-          "motivator.api.dev.mindtastic.lol"
+          "koda.koda.svc.cluster.local:4133",
+          "kratos-public.kratos.svc.cluster.local"
         ],
         "http.host": [
-          "wiki.api.dev.mindtastic.lol",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "koda.koda.svc.cluster.local:4133",
-          "diary.api.dev.mindtastic.lol",
           "auth.api.dev.mindtastic.lol",
-          "motivator.api.dev.mindtastic.lol"
+          "koda.koda.svc.cluster.local:4133",
+          "kratos-public.kratos.svc.cluster.local"
         ],
         "http.method": [
           "GET",
           "POST"
         ],
         "http.path": [
-          "/wiki",
-          "/decisions",
-          "/",
-          "/diary",
-          "/tilt/sessions/whoami",
-          "/moodivator"
+          "/sessions/whoami",
+          "/"
         ],
         "http.status_code": [
-          "200",
-          "404"
-        ],
-        "http.url": [
-          "/wiki"
+          "200"
         ],
         "opencensus.same_process_as_parent_span": [
-          "false",
-          "true"
+          "true",
+          "false"
         ],
         "tilt.legitimate_interests": [
           "[]"
-        ],
-        "traefik.router.name": [
-          "websecure-wiki-service-wiki-service-wiki-api-dev-mindtastic-lol@kubernetes"
-        ],
-        "traefik.service.name": [
-          "wiki-service-wiki-service-5001"
-        ]
-      }
-    },
-    {
-      "From": "koda-proxy",
-      "To": "koda-proxy",
-      "Attributes": {
-        "direction": [
-          "inbound",
-          "outbound"
-        ],
-        "http.authority": [
-          "koda.koda.svc.cluster.local:4133",
-          "diary.api.dev.mindtastic.lol",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "auth.api.dev.mindtastic.lol",
-          "motivator.api.dev.mindtastic.lol"
-        ],
-        "http.host": [
-          "users.api.dev.mindtastic.lol",
-          "koda.koda.svc.cluster.local:4133",
-          "diary.api.dev.mindtastic.lol",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "auth.api.dev.mindtastic.lol",
-          "motivator.api.dev.mindtastic.lol"
-        ],
-        "http.method": [
-          "GET",
-          "POST"
-        ],
-        "http.path": [
-          "/",
-          "/diary",
-          "/decisions",
-          "/tilt/sessions/whoami",
-          "/moodivator"
-        ],
-        "http.status_code": [
-          "200",
-          "404"
-        ],
-        "http.url": [
-          "/user"
-        ],
-        "opencensus.same_process_as_parent_span": [
-          "true"
-        ],
-        "tilt.legitimate_interests": [
-          "[]"
-        ],
-        "traefik.router.name": [
-          "websecure-user-service-user-service-users-api-dev-mindtastic-lol@kubernetes"
-        ],
-        "traefik.service.name": [
-          "user-service-user-service-8000"
         ]
       }
     },
@@ -206,28 +155,77 @@
       "To": "traefik-proxy",
       "Attributes": {
         "direction": [
+          "outbound",
           "inbound"
         ],
         "http.authority": [
+          "auth.api.dev.mindtastic.lol",
+          "koda.koda.svc.cluster.local:4133",
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+          "diary.api.dev.mindtastic.lol",
           "kratos-public.kratos.svc.cluster.local"
         ],
         "http.host": [
-          "kratos-public.kratos.svc.cluster.local"
+          "auth.api.dev.mindtastic.lol",
+          "motivator.api.dev.mindtastic.lol",
+          "kratos-public.kratos.svc.cluster.local",
+          "koda.koda.svc.cluster.local:4133",
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+          "diary.api.dev.mindtastic.lol"
         ],
         "http.method": [
-          "GET"
+          "GET",
+          "POST"
         ],
         "http.path": [
-          "/sessions/whoami"
+          "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+          "/sessions/whoami",
+          "/tilt/self-service/registration/browser",
+          "/",
+          "/decisions",
+          "/diary",
+          "/tilt/sessions/whoami"
         ],
         "http.status_code": [
-          "200"
+          "204",
+          "200",
+          "404",
+          "401"
+        ],
+        "http.url": [
+          "/sessions/whoami",
+          "/moodivator"
         ],
         "opencensus.same_process_as_parent_span": [
-          "true"
+          "true",
+          "false"
+        ],
+        "tilt.categories": [
+          "Diary entry"
+        ],
+        "tilt.legal_bases": [
+          "GDPR-99-1-a",
+          "GDPR-99-2-b"
         ],
         "tilt.legitimate_interests": [
-          "[]"
+          "[]",
+          "[true true]"
+        ],
+        "tilt.purposes": [
+          "Mood",
+          "Mood"
+        ],
+        "tilt.storage_durations": [
+          "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
+          "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
+        ],
+        "traefik.router.name": [
+          "websecure-kratos-public-kratos-auth-api-dev-mindtastic-lol@kubernetes",
+          "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
+        ],
+        "traefik.service.name": [
+          "kratos-kratos-public-http-public",
+          "motivator-service-motivator-service-5001"
         ]
       }
     },
@@ -240,31 +238,250 @@
           "inbound"
         ],
         "http.authority": [
+          "auth.api.dev.mindtastic.lol",
+          "koda.koda.svc.cluster.local:4133",
           "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "wiki.api.dev.mindtastic.lol",
+          "diary.api.dev.mindtastic.lol",
           "kratos-public.kratos.svc.cluster.local"
         ],
         "http.host": [
+          "auth.api.dev.mindtastic.lol",
+          "motivator.api.dev.mindtastic.lol",
+          "kratos-public.kratos.svc.cluster.local",
+          "koda.koda.svc.cluster.local:4133",
           "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "wiki.api.dev.mindtastic.lol",
+          "diary.api.dev.mindtastic.lol"
+        ],
+        "http.method": [
+          "GET",
+          "POST"
+        ],
+        "http.path": [
+          "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+          "/sessions/whoami",
+          "/tilt/self-service/registration/browser",
+          "/",
+          "/decisions",
+          "/diary",
+          "/tilt/sessions/whoami"
+        ],
+        "http.status_code": [
+          "204",
+          "200",
+          "404"
+        ],
+        "http.url": [
+          "/tilt/self-service/registration/browser",
+          "/moodivator"
+        ],
+        "opencensus.same_process_as_parent_span": [
+          "false",
+          "true"
+        ],
+        "tilt.categories": [
+          "Diary entry"
+        ],
+        "tilt.legal_bases": [
+          "GDPR-99-1-a",
+          "GDPR-99-2-b"
+        ],
+        "tilt.legitimate_interests": [
+          "[]",
+          "[true true]"
+        ],
+        "tilt.purposes": [
+          "Mood",
+          "Mood"
+        ],
+        "tilt.storage_durations": [
+          "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
+          "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
+        ],
+        "traefik.router.name": [
+          "websecure-kratos-public-kratos-auth-api-dev-mindtastic-lol@kubernetes",
+          "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
+        ],
+        "traefik.service.name": [
+          "kratos-kratos-public-http-public",
+          "motivator-service-motivator-service-5001"
+        ]
+      }
+    },
+    {
+      "From": "wiki-service-proxy",
+      "To": "wiki-service-proxy",
+      "Attributes": {
+        "direction": [
+          "inbound"
+        ],
+        "http.authority": [
+          "auth.api.dev.mindtastic.lol",
+          "koda.koda.svc.cluster.local:4133",
+          "kratos-public.kratos.svc.cluster.local"
+        ],
+        "http.host": [
+          "auth.api.dev.mindtastic.lol",
+          "koda.koda.svc.cluster.local:4133",
           "kratos-public.kratos.svc.cluster.local"
         ],
         "http.method": [
-          "GET"
+          "GET",
+          "POST"
         ],
         "http.path": [
-          "/decisions",
-          "/wiki",
+          "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+          "/",
           "/sessions/whoami"
+        ],
+        "http.status_code": [
+          "204",
+          "200"
+        ],
+        "http.url": [
+          "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB"
+        ],
+        "opencensus.same_process_as_parent_span": [
+          "true",
+          "false"
+        ],
+        "tilt.legitimate_interests": [
+          "[]"
+        ],
+        "traefik.router.name": [
+          "websecure-kratos-public-kratos-auth-api-dev-mindtastic-lol@kubernetes"
+        ],
+        "traefik.service.name": [
+          "kratos-kratos-public-http-public"
+        ]
+      }
+    },
+    {
+      "From": "mood-diary-proxy",
+      "To": "mood-diary-proxy",
+      "Attributes": {
+        "direction": [
+          "inbound"
+        ],
+        "http.host": [
+          "koda.koda.svc.cluster.local:4133"
+        ],
+        "http.method": [
+          "POST"
+        ],
+        "http.path": [
+          "/"
         ],
         "http.status_code": [
           "200"
         ],
         "opencensus.same_process_as_parent_span": [
-          "true"
+          "false"
+        ]
+      }
+    },
+    {
+      "From": "koda-proxy",
+      "To": "koda-proxy",
+      "Attributes": {
+        "direction": [
+          "inbound"
+        ],
+        "http.authority": [
+          "kratos-public.kratos.svc.cluster.local"
+        ],
+        "http.host": [
+          "kratos-public.kratos.svc.cluster.local",
+          "koda.koda.svc.cluster.local:4133"
+        ],
+        "http.method": [
+          "GET",
+          "POST"
+        ],
+        "http.path": [
+          "/sessions/whoami",
+          "/"
+        ],
+        "http.status_code": [
+          "200"
+        ],
+        "opencensus.same_process_as_parent_span": [
+          "true",
+          "false"
         ],
         "tilt.legitimate_interests": [
           "[]"
+        ]
+      }
+    },
+    {
+      "From": "traefik-proxy",
+      "To": "kratos-proxy",
+      "Attributes": {
+        "direction": [
+          "inbound",
+          "outbound"
+        ],
+        "http.authority": [
+          "koda.koda.svc.cluster.local:4133",
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+          "diary.api.dev.mindtastic.lol",
+          "kratos-public.kratos.svc.cluster.local",
+          "auth.api.dev.mindtastic.lol"
+        ],
+        "http.host": [
+          "motivator.api.dev.mindtastic.lol",
+          "kratos-public.kratos.svc.cluster.local",
+          "koda.koda.svc.cluster.local:4133",
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+          "diary.api.dev.mindtastic.lol",
+          "auth.api.dev.mindtastic.lol"
+        ],
+        "http.method": [
+          "GET",
+          "POST"
+        ],
+        "http.path": [
+          "/sessions/whoami",
+          "/",
+          "/decisions",
+          "/diary",
+          "/tilt/sessions/whoami"
+        ],
+        "http.status_code": [
+          "200",
+          "404"
+        ],
+        "http.url": [
+          "/moodivator"
+        ],
+        "opencensus.same_process_as_parent_span": [
+          "false",
+          "true"
+        ],
+        "tilt.categories": [
+          "Diary entry"
+        ],
+        "tilt.legal_bases": [
+          "GDPR-99-1-a",
+          "GDPR-99-2-b"
+        ],
+        "tilt.legitimate_interests": [
+          "[]",
+          "[true true]"
+        ],
+        "tilt.purposes": [
+          "Mood",
+          "Mood"
+        ],
+        "tilt.storage_durations": [
+          "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
+          "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
+        ],
+        "traefik.router.name": [
+          "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
+        ],
+        "traefik.service.name": [
+          "motivator-service-motivator-service-5001"
         ]
       }
     },
@@ -276,22 +493,59 @@
           "inbound"
         ],
         "http.authority": [
+          "koda.koda.svc.cluster.local:4133",
           "kratos-public.kratos.svc.cluster.local"
         ],
         "http.host": [
+          "koda.koda.svc.cluster.local:4133",
           "kratos-public.kratos.svc.cluster.local"
         ],
         "http.method": [
+          "POST",
           "GET"
         ],
         "http.path": [
+          "/",
           "/sessions/whoami"
         ],
         "http.status_code": [
           "200"
         ],
         "opencensus.same_process_as_parent_span": [
-          "true"
+          "true",
+          "false"
+        ],
+        "tilt.legitimate_interests": [
+          "[]"
+        ]
+      }
+    },
+    {
+      "From": "bouncer-proxy",
+      "To": "bouncer-proxy",
+      "Attributes": {
+        "direction": [
+          "outbound",
+          "inbound"
+        ],
+        "http.authority": [
+          "auth.api.dev.mindtastic.lol"
+        ],
+        "http.host": [
+          "auth.api.dev.mindtastic.lol"
+        ],
+        "http.method": [
+          "GET"
+        ],
+        "http.path": [
+          "/self-service/registration/browser"
+        ],
+        "http.status_code": [
+          "200"
+        ],
+        "opencensus.same_process_as_parent_span": [
+          "true",
+          "false"
         ],
         "tilt.legitimate_interests": [
           "[]"
@@ -330,86 +584,16 @@
           "inbound"
         ],
         "http.authority": [
-          "kratos-public.kratos.svc.cluster.local"
-        ],
-        "http.host": [
-          "kratos-public.kratos.svc.cluster.local"
-        ],
-        "http.method": [
-          "GET"
-        ],
-        "http.path": [
-          "/sessions/whoami"
-        ],
-        "http.status_code": [
-          "200"
-        ],
-        "opencensus.same_process_as_parent_span": [
-          "true"
-        ],
-        "tilt.legitimate_interests": [
-          "[]"
-        ]
-      }
-    },
-    {
-      "From": "traefik-proxy",
-      "To": "motivator-service-proxy",
-      "Attributes": {
-        "direction": [
-          "inbound",
-          "outbound"
-        ],
-        "http.authority": [
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "diary.api.dev.mindtastic.lol",
-          "auth.api.dev.mindtastic.lol",
           "motivator.api.dev.mindtastic.lol"
         ],
         "http.host": [
-          "kratos-public.kratos.svc.cluster.local",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "diary.api.dev.mindtastic.lol",
-          "auth.api.dev.mindtastic.lol",
           "motivator.api.dev.mindtastic.lol"
         ],
         "http.method": [
           "GET"
         ],
         "http.path": [
-          "/sessions/whoami",
-          "/decisions",
-          "/diary",
-          "/tilt/sessions/whoami",
           "/moodivator"
-        ],
-        "http.status_code": [
-          "200",
-          "404"
-        ],
-        "opencensus.same_process_as_parent_span": [
-          "false"
-        ]
-      }
-    },
-    {
-      "From": "mood-diary-proxy",
-      "To": "mood-diary-proxy",
-      "Attributes": {
-        "direction": [
-          "inbound"
-        ],
-        "http.authority": [
-          "diary.api.dev.mindtastic.lol"
-        ],
-        "http.host": [
-          "diary.api.dev.mindtastic.lol"
-        ],
-        "http.method": [
-          "GET"
-        ],
-        "http.path": [
-          "/diary"
         ],
         "http.status_code": [
           "200"
@@ -418,7 +602,7 @@
           "true"
         ],
         "tilt.categories": [
-          "Diary entry"
+          "Moodivator"
         ],
         "tilt.legal_bases": [
           "GDPR-99-1-a"
@@ -427,68 +611,37 @@
           "[true]"
         ],
         "tilt.purposes": [
-          "Mood"
+          "To provide the mood service with data"
         ],
         "tilt.storage_durations": [
-          "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
-          "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
+          "2022-07-05T07:31:42P3Y6M4DT12H30M17D"
         ]
       }
     },
     {
       "From": "traefik-proxy",
-      "To": "mood-diary-proxy",
+      "To": "motivator-service-proxy",
       "Attributes": {
         "direction": [
           "inbound"
         ],
         "http.authority": [
-          "diary.api.dev.mindtastic.lol"
+          "motivator.api.dev.mindtastic.lol"
         ],
         "http.host": [
-          "diary.api.dev.mindtastic.lol"
+          "motivator.api.dev.mindtastic.lol"
         ],
         "http.method": [
           "GET"
         ],
         "http.path": [
-          "/diary"
+          "/moodivator"
         ],
         "http.status_code": [
           "200"
         ],
         "opencensus.same_process_as_parent_span": [
           "false"
-        ]
-      }
-    },
-    {
-      "From": "kagami-proxy",
-      "To": "kagami-proxy",
-      "Attributes": {
-        "direction": [
-          "inbound"
-        ],
-        "http.authority": [
-          "echo.api.dev.mindtastic.lol"
-        ],
-        "http.host": [
-          "echo.api.dev.mindtastic.lol"
-        ],
-        "http.method": [
-          "GET"
-        ],
-        "http.path": [
-          "/"
-        ],
-        "http.status_code": [
-          "200"
-        ],
-        "opencensus.same_process_as_parent_span": [
-          "true"
-        ],
-        "tilt.legitimate_interests": [
-          "[]"
         ]
       }
     },
@@ -525,10 +678,11 @@
           "BDSG-42-5"
         ],
         "tilt.legitimate_interests": [
-          "[false]"
+          "[true]"
         ],
         "tilt.purposes": [
-          "To provide the user-service-tilt"
+          "To store the user's preferences and notification settings",
+          "Sending push notifications with information"
         ],
         "tilt.storage_durations": [
           ""
@@ -536,53 +690,50 @@
       }
     },
     {
-      "From": "wiki-service-proxy",
-      "To": "wiki-service-proxy",
+      "From": "traefik-proxy",
+      "To": "user-service-proxy",
       "Attributes": {
         "direction": [
           "inbound"
         ],
         "http.authority": [
-          "wiki.api.dev.mindtastic.lol"
+          "users.api.dev.mindtastic.lol"
         ],
         "http.host": [
-          "wiki.api.dev.mindtastic.lol"
+          "users.api.dev.mindtastic.lol"
         ],
         "http.method": [
           "GET"
         ],
         "http.path": [
-          "/wiki"
+          "/user"
         ],
         "http.status_code": [
           "200"
         ],
         "opencensus.same_process_as_parent_span": [
-          "true"
-        ],
-        "tilt.legitimate_interests": [
-          "[]"
+          "false"
         ]
       }
     },
     {
       "From": "traefik-proxy",
-      "To": "wiki-service-proxy",
+      "To": "mood-diary-proxy",
       "Attributes": {
         "direction": [
           "inbound"
         ],
         "http.authority": [
-          "wiki.api.dev.mindtastic.lol"
+          "diary.api.dev.mindtastic.lol"
         ],
         "http.host": [
-          "wiki.api.dev.mindtastic.lol"
+          "diary.api.dev.mindtastic.lol"
         ],
         "http.method": [
           "GET"
         ],
         "http.path": [
-          "/wiki"
+          "/diary"
         ],
         "http.status_code": [
           "200"
@@ -643,6 +794,77 @@
         ]
       }
     },
+    "EntryPoint traefik 10.11.2.3:9000": {
+      "Edges": [
+        {
+          "From": "traefik",
+          "To": "traefik",
+          "Attributes": {
+            "http.host": [
+              "10.11.2.3:9000"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "http.url": [
+              "/ping"
+            ],
+            "traefik.router.name": [
+              "ping@internal"
+            ],
+            "traefik.service.name": [
+              "ping@internal"
+            ]
+          }
+        }
+      ],
+      "RequestRate": 0,
+      "Attributes": {
+        "http.host": [
+          "10.11.2.3:9000"
+        ],
+        "http.method": [
+          "GET"
+        ],
+        "http.status_code": [
+          "200"
+        ],
+        "http.url": [
+          "/ping"
+        ],
+        "traefik.router.name": [
+          "ping@internal"
+        ],
+        "traefik.service.name": [
+          "ping@internal"
+        ]
+      }
+    },
+    "EntryPoint web 35.228.34.158": {
+      "Edges": [
+        {
+          "From": "traefik",
+          "To": "traefik",
+          "Attributes": {}
+        }
+      ],
+      "RequestRate": 0,
+      "Attributes": {}
+    },
+    "EntryPoint web 35.228.34.158:80": {
+      "Edges": [
+        {
+          "From": "traefik",
+          "To": "traefik",
+          "Attributes": {}
+        }
+      ],
+      "RequestRate": 0,
+      "Attributes": {}
+    },
     "EntryPoint web auth.api.dev.mindtastic.lol": {
       "Edges": [
         {
@@ -668,10 +890,11 @@
     "EntryPoint websecure auth.api.dev.mindtastic.lol": {
       "Edges": [
         {
-          "From": "kratos-proxy",
+          "From": "traefik-proxy",
           "To": "kratos-proxy",
           "Attributes": {
             "direction": [
+              "outbound",
               "inbound"
             ],
             "http.authority": [
@@ -684,17 +907,142 @@
               "GET"
             ],
             "http.path": [
-              "/tilt/sessions/whoami"
+              "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami",
+              "/",
+              "/tilt/self-service/logout/browser",
+              "/self-service/login/browser",
+              "/self-service/registration/browser"
             ],
             "http.status_code": [
+              "200",
+              "204",
               "404",
-              "200"
+              "401"
             ],
             "http.url": [
-              "/sessions/whoami"
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami"
             ],
             "opencensus.same_process_as_parent_span": [
+              "false",
               "true"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-kratos-public-kratos-auth-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "kratos-kratos-public-http-public"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "traefik-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "auth.api.dev.mindtastic.lol"
+            ],
+            "http.host": [
+              "auth.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/sessions/whoami",
+              "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami",
+              "/",
+              "/tilt/self-service/logout/browser",
+              "/self-service/login/browser",
+              "/self-service/registration/browser"
+            ],
+            "http.status_code": [
+              "200",
+              "204",
+              "404",
+              "401"
+            ],
+            "http.url": [
+              "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-kratos-public-kratos-auth-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "kratos-kratos-public-http-public"
+            ]
+          }
+        },
+        {
+          "From": "traefik",
+          "To": "traefik-proxy",
+          "Attributes": {
+            "direction": [
+              "outbound",
+              "inbound"
+            ],
+            "http.authority": [
+              "auth.api.dev.mindtastic.lol"
+            ],
+            "http.host": [
+              "auth.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami",
+              "/",
+              "/tilt/self-service/logout/browser",
+              "/self-service/login/browser",
+              "/self-service/registration/browser"
+            ],
+            "http.status_code": [
+              "204",
+              "200",
+              "404",
+              "401"
+            ],
+            "http.url": [
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
             ],
             "tilt.legitimate_interests": [
               "[]"
@@ -712,6 +1060,7 @@
           "To": "traefik",
           "Attributes": {
             "direction": [
+              "outbound",
               "inbound"
             ],
             "http.authority": [
@@ -724,16 +1073,30 @@
               "GET"
             ],
             "http.path": [
-              "/tilt/sessions/whoami"
+              "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami",
+              "/",
+              "/tilt/self-service/logout/browser",
+              "/self-service/login/browser",
+              "/self-service/registration/browser"
             ],
             "http.status_code": [
+              "204",
+              "200",
               "404",
-              "200"
+              "401"
             ],
             "http.url": [
-              "/sessions/whoami"
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami"
             ],
             "opencensus.same_process_as_parent_span": [
+              "false",
               "true"
             ],
             "tilt.legitimate_interests": [
@@ -748,483 +1111,79 @@
           }
         },
         {
-          "From": "traefik-proxy",
-          "To": "kratos-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.authority": [
-              "auth.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "auth.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/tilt/sessions/whoami"
-            ],
-            "http.status_code": [
-              "404"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        },
-        {
-          "From": "traefik-proxy",
-          "To": "traefik-proxy",
-          "Attributes": {
-            "direction": [
-              "outbound"
-            ],
-            "http.authority": [
-              "auth.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "auth.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/tilt/sessions/whoami"
-            ],
-            "http.status_code": [
-              "404"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "true"
-            ]
-          }
-        },
-        {
-          "From": "traefik",
-          "To": "traefik-proxy",
-          "Attributes": {
-            "direction": [
-              "outbound"
-            ],
-            "http.authority": [
-              "auth.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "auth.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/tilt/sessions/whoami"
-            ],
-            "http.status_code": [
-              "404"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        }
-      ],
-      "RequestRate": 0,
-      "Attributes": {
-        "direction": [
-          "inbound",
-          "outbound"
-        ],
-        "http.authority": [
-          "auth.api.dev.mindtastic.lol"
-        ],
-        "http.host": [
-          "auth.api.dev.mindtastic.lol"
-        ],
-        "http.method": [
-          "GET"
-        ],
-        "http.path": [
-          "/tilt/sessions/whoami"
-        ],
-        "http.status_code": [
-          "404"
-        ],
-        "opencensus.same_process_as_parent_span": [
-          "true",
-          "false"
-        ],
-        "tilt.legitimate_interests": [
-          "[]"
-        ]
-      }
-    },
-    "EntryPoint websecure diary.api.dev.mindtastic.lol": {
-      "Edges": [
-        {
-          "From": "traefik-proxy",
-          "To": "koda-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.host": [
-              "koda.koda.svc.cluster.local:4133"
-            ],
-            "http.method": [
-              "POST"
-            ],
-            "http.path": [
-              "/"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        },
-        {
-          "From": "traefik",
-          "To": "traefik-proxy",
-          "Attributes": {
-            "direction": [
-              "outbound"
-            ],
-            "http.authority": [
-              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
-            ],
-            "http.host": [
-              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/decisions"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        },
-        {
-          "From": "traefik-proxy",
-          "To": "traefik-proxy",
-          "Attributes": {
-            "direction": [
-              "outbound"
-            ],
-            "http.authority": [
-              "diary.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "diary.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/diary"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "true"
-            ]
-          }
-        },
-        {
-          "From": "traefik",
-          "To": "traefik",
-          "Attributes": {
-            "http.host": [
-              "diary.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "http.url": [
-              "/diary"
-            ],
-            "traefik.router.name": [
-              "websecure-mood-diary-mood-diary-diary-api-dev-mindtastic-lol@kubernetes"
-            ],
-            "traefik.service.name": [
-              "mood-diary-mood-diary-5001"
-            ]
-          }
-        },
-        {
-          "From": "koda-proxy",
-          "To": "koda-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.authority": [
-              "koda.koda.svc.cluster.local:4133"
-            ],
-            "http.host": [
-              "koda.koda.svc.cluster.local:4133"
-            ],
-            "http.method": [
-              "POST"
-            ],
-            "http.path": [
-              "/"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "true"
-            ],
-            "tilt.legitimate_interests": [
-              "[]"
-            ]
-          }
-        },
-        {
-          "From": "mood-diary-proxy",
-          "To": "mood-diary-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.authority": [
-              "diary.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "diary.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/diary"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "true"
-            ],
-            "tilt.categories": [
-              "Diary entry"
-            ],
-            "tilt.legal_bases": [
-              "GDPR-99-1-a"
-            ],
-            "tilt.legitimate_interests": [
-              "[true]"
-            ],
-            "tilt.purposes": [
-              "Mood"
-            ],
-            "tilt.storage_durations": [
-              "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
-              "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
-            ]
-          }
-        },
-        {
-          "From": "traefik-proxy",
-          "To": "mood-diary-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.authority": [
-              "diary.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "diary.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/diary"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        },
-        {
           "From": "kratos-proxy",
           "To": "kratos-proxy",
           "Attributes": {
             "direction": [
+              "outbound",
               "inbound"
             ],
             "http.authority": [
-              "kratos-public.kratos.svc.cluster.local"
+              "auth.api.dev.mindtastic.lol"
             ],
             "http.host": [
-              "kratos-public.kratos.svc.cluster.local"
+              "auth.api.dev.mindtastic.lol"
             ],
             "http.method": [
               "GET"
             ],
             "http.path": [
-              "/sessions/whoami"
+              "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami",
+              "/",
+              "/tilt/self-service/logout/browser",
+              "/self-service/login/browser",
+              "/self-service/registration/browser"
             ],
             "http.status_code": [
-              "200"
+              "204",
+              "200",
+              "404",
+              "401"
+            ],
+            "http.url": [
+              "/self-service/logout?token=H0asVceIQNYCbY69sR3UuxA9iYQG4QBB",
+              "/sessions/whoami",
+              "/tilt/self-service/registration/browser",
+              "/self-service/logout/browser",
+              "/tilt/sessions/whoami"
             ],
             "opencensus.same_process_as_parent_span": [
+              "false",
               "true"
             ],
             "tilt.legitimate_interests": [
               "[]"
-            ]
-          }
-        },
-        {
-          "From": "traefik-proxy",
-          "To": "kratos-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.host": [
-              "kratos-public.kratos.svc.cluster.local"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/sessions/whoami"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        }
-      ],
-      "RequestRate": 0,
-      "Attributes": {
-        "direction": [
-          "inbound",
-          "outbound"
-        ],
-        "http.authority": [
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "diary.api.dev.mindtastic.lol",
-          "koda.koda.svc.cluster.local:4133",
-          "kratos-public.kratos.svc.cluster.local"
-        ],
-        "http.host": [
-          "koda.koda.svc.cluster.local:4133",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "diary.api.dev.mindtastic.lol",
-          "kratos-public.kratos.svc.cluster.local"
-        ],
-        "http.method": [
-          "POST",
-          "GET"
-        ],
-        "http.path": [
-          "/",
-          "/decisions",
-          "/diary",
-          "/sessions/whoami"
-        ],
-        "http.status_code": [
-          "200"
-        ],
-        "http.url": [
-          "/diary"
-        ],
-        "opencensus.same_process_as_parent_span": [
-          "false",
-          "true"
-        ],
-        "tilt.categories": [
-          "Diary entry"
-        ],
-        "tilt.legal_bases": [
-          "GDPR-99-1-a"
-        ],
-        "tilt.legitimate_interests": [
-          "[]",
-          "[true]"
-        ],
-        "tilt.purposes": [
-          "Mood"
-        ],
-        "tilt.storage_durations": [
-          "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
-          "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
-        ],
-        "traefik.router.name": [
-          "websecure-mood-diary-mood-diary-diary-api-dev-mindtastic-lol@kubernetes"
-        ],
-        "traefik.service.name": [
-          "mood-diary-mood-diary-5001"
-        ]
-      }
-    },
-    "EntryPoint websecure echo.api.dev.mindtastic.lol": {
-      "Edges": [
-        {
-          "From": "traefik",
-          "To": "traefik",
-          "Attributes": {
-            "http.host": [
-              "echo.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "http.url": [
-              "/"
             ],
             "traefik.router.name": [
-              "websecure-kagami-kagami-echo-api-dev-mindtastic-lol@kubernetes"
+              "websecure-kratos-public-kratos-auth-api-dev-mindtastic-lol@kubernetes"
             ],
             "traefik.service.name": [
-              "kagami-kagami-7666"
+              "kratos-kratos-public-http-public"
             ]
           }
         },
         {
-          "From": "kagami-proxy",
-          "To": "kagami-proxy",
+          "From": "bouncer-proxy",
+          "To": "bouncer-proxy",
           "Attributes": {
             "direction": [
-              "inbound"
+              "outbound"
             ],
             "http.authority": [
-              "echo.api.dev.mindtastic.lol"
+              "auth.api.dev.mindtastic.lol"
             ],
             "http.host": [
-              "echo.api.dev.mindtastic.lol"
+              "auth.api.dev.mindtastic.lol"
             ],
             "http.method": [
               "GET"
             ],
             "http.path": [
-              "/"
+              "/self-service/registration/browser"
             ],
             "http.status_code": [
               "200"
@@ -1244,22 +1203,22 @@
           "inbound"
         ],
         "http.authority": [
-          "echo.api.dev.mindtastic.lol"
+          "auth.api.dev.mindtastic.lol"
         ],
         "http.host": [
-          "echo.api.dev.mindtastic.lol"
+          "auth.api.dev.mindtastic.lol"
         ],
         "http.method": [
           "GET"
         ],
         "http.path": [
-          "/"
+          "/sessions/whoami"
         ],
         "http.status_code": [
           "200"
         ],
         "http.url": [
-          "/"
+          "/sessions/whoami"
         ],
         "opencensus.same_process_as_parent_span": [
           "true"
@@ -1268,10 +1227,405 @@
           "[]"
         ],
         "traefik.router.name": [
-          "websecure-kagami-kagami-echo-api-dev-mindtastic-lol@kubernetes"
+          "websecure-kratos-public-kratos-auth-api-dev-mindtastic-lol@kubernetes"
         ],
         "traefik.service.name": [
-          "kagami-kagami-7666"
+          "kratos-kratos-public-http-public"
+        ]
+      }
+    },
+    "EntryPoint websecure diary.api.dev.mindtastic.lol": {
+      "Edges": [
+        {
+          "From": "mood-diary-proxy",
+          "To": "mood-diary-proxy",
+          "Attributes": {
+            "direction": [
+              "outbound"
+            ],
+            "http.authority": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.host": [
+              "diary.api.dev.mindtastic.lol",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/decisions"
+            ],
+            "http.status_code": [
+              "200",
+              "404"
+            ],
+            "http.url": [
+              "/diary"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false"
+            ],
+            "traefik.router.name": [
+              "websecure-mood-diary-mood-diary-diary-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "mood-diary-mood-diary-5001"
+            ]
+          }
+        },
+        {
+          "From": "traefik",
+          "To": "traefik",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "kratos-public.kratos.svc.cluster.local",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.host": [
+              "kratos-public.kratos.svc.cluster.local",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/sessions/whoami",
+              "/decisions"
+            ],
+            "http.status_code": [
+              "200",
+              "404"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ]
+          }
+        },
+        {
+          "From": "koda-proxy",
+          "To": "koda-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound"
+            ],
+            "http.host": [
+              "kratos-public.kratos.svc.cluster.local",
+              "diary.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/sessions/whoami"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "http.url": [
+              "/diary"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false"
+            ],
+            "traefik.router.name": [
+              "websecure-mood-diary-mood-diary-diary-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "mood-diary-mood-diary-5001"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "traefik-proxy",
+          "Attributes": {
+            "direction": [
+              "outbound"
+            ],
+            "http.authority": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.host": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/decisions"
+            ],
+            "http.status_code": [
+              "200",
+              "404"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false"
+            ]
+          }
+        },
+        {
+          "From": "traefik",
+          "To": "traefik-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound"
+            ],
+            "http.authority": [
+              "diary.api.dev.mindtastic.lol"
+            ],
+            "http.host": [
+              "diary.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/diary"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false"
+            ]
+          }
+        },
+        {
+          "From": "kratos-proxy",
+          "To": "kratos-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound"
+            ],
+            "http.authority": [
+              "koda.koda.svc.cluster.local:4133"
+            ],
+            "http.host": [
+              "koda.koda.svc.cluster.local:4133",
+              "kratos-public.kratos.svc.cluster.local",
+              "diary.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "POST",
+              "GET"
+            ],
+            "http.path": [
+              "/",
+              "/sessions/whoami"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "http.url": [
+              "/diary"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ],
+            "traefik.router.name": [
+              "websecure-mood-diary-mood-diary-diary-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "mood-diary-mood-diary-5001"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "kratos-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "diary.api.dev.mindtastic.lol",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.host": [
+              "koda.koda.svc.cluster.local:4133",
+              "diary.api.dev.mindtastic.lol",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.method": [
+              "POST",
+              "GET"
+            ],
+            "http.path": [
+              "/",
+              "/diary",
+              "/decisions"
+            ],
+            "http.status_code": [
+              "200",
+              "404"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false",
+              "true"
+            ],
+            "tilt.categories": [
+              "Diary entry"
+            ],
+            "tilt.legal_bases": [
+              "GDPR-99-1-a",
+              "GDPR-99-2-b"
+            ],
+            "tilt.legitimate_interests": [
+              "[true true]",
+              "[]"
+            ],
+            "tilt.purposes": [
+              "Mood",
+              "Mood"
+            ],
+            "tilt.storage_durations": [
+              "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
+              "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "koda-proxy",
+          "Attributes": {
+            "direction": [
+              "outbound"
+            ],
+            "http.authority": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.host": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/decisions"
+            ],
+            "http.status_code": [
+              "200",
+              "404"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "mood-diary-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "diary.api.dev.mindtastic.lol",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.host": [
+              "diary.api.dev.mindtastic.lol",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/diary",
+              "/decisions"
+            ],
+            "http.status_code": [
+              "200",
+              "404"
+            ],
+            "http.url": [
+              "/diary"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ],
+            "traefik.router.name": [
+              "websecure-mood-diary-mood-diary-diary-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "mood-diary-mood-diary-5001"
+            ]
+          }
+        }
+      ],
+      "RequestRate": 0,
+      "Attributes": {
+        "direction": [
+          "inbound",
+          "outbound"
+        ],
+        "http.authority": [
+          "kratos-public.kratos.svc.cluster.local",
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+          "diary.api.dev.mindtastic.lol",
+          "koda.koda.svc.cluster.local:4133"
+        ],
+        "http.host": [
+          "diary.api.dev.mindtastic.lol",
+          "kratos-public.kratos.svc.cluster.local",
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+          "koda.koda.svc.cluster.local:4133"
+        ],
+        "http.method": [
+          "GET",
+          "POST"
+        ],
+        "http.path": [
+          "/sessions/whoami",
+          "/decisions",
+          "/diary",
+          "/"
+        ],
+        "http.status_code": [
+          "200"
+        ],
+        "http.url": [
+          "/diary"
+        ],
+        "opencensus.same_process_as_parent_span": [
+          "true",
+          "false"
+        ],
+        "traefik.router.name": [
+          "websecure-mood-diary-mood-diary-diary-api-dev-mindtastic-lol@kubernetes"
+        ],
+        "traefik.service.name": [
+          "mood-diary-mood-diary-5001"
+        ],
+        "tilt.categories": [
+          "Diary entry"
+        ],
+        "tilt.legal_bases": [
+          "GDPR-99-1-a",
+          "GDPR-99-2-b"
+        ],
+        "tilt.legitimate_interests": [
+          "[true true]",
+          "[]"
+        ],
+        "tilt.purposes": [
+          "Mood",
+          "Mood"
+        ],
+        "tilt.storage_durations": [
+          "2022-07-10T18:31:42P3Y6M4DT12H30M17S",
+          "2005-08-09T18:31:42P3Y6M4DT12H30M17S"
         ]
       }
     },
@@ -1281,17 +1635,59 @@
           "From": "traefik",
           "To": "traefik",
           "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "motivator.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133",
+              "kratos-public.kratos.svc.cluster.local"
+            ],
             "http.host": [
-              "motivator.api.dev.mindtastic.lol"
+              "motivator.api.dev.mindtastic.lol",
+              "kratos-public.kratos.svc.cluster.local",
+              "koda.koda.svc.cluster.local:4133"
             ],
             "http.method": [
-              "GET"
+              "GET",
+              "POST"
+            ],
+            "http.path": [
+              "/moodivator",
+              "/sessions/whoami",
+              "/motivator",
+              "/"
             ],
             "http.status_code": [
               "200"
             ],
             "http.url": [
+              "/motivator",
               "/moodivator"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ],
+            "tilt.categories": [
+              "Moodivator"
+            ],
+            "tilt.legal_bases": [
+              "GDPR-99-1-a",
+              "GDPR-100-1-c"
+            ],
+            "tilt.legitimate_interests": [
+              "[true true]",
+              "[]"
+            ],
+            "tilt.purposes": [
+              "To provide users with motivators based on their past mood",
+              "To provide analytics correllating past mood with motivator results"
+            ],
+            "tilt.storage_durations": [
+              "30 days",
+              "30 days"
             ],
             "traefik.router.name": [
               "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
@@ -1306,22 +1702,538 @@
           "To": "kratos-proxy",
           "Attributes": {
             "direction": [
-              "inbound"
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "motivator.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133",
+              "kratos-public.kratos.svc.cluster.local"
             ],
             "http.host": [
+              "motivator.api.dev.mindtastic.lol",
+              "kratos-public.kratos.svc.cluster.local",
+              "koda.koda.svc.cluster.local:4133"
+            ],
+            "http.method": [
+              "GET",
+              "POST"
+            ],
+            "http.path": [
+              "/motivator",
+              "/sessions/whoami",
+              "/",
+              "/moodivator"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "http.url": [
+              "/moodivator"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "motivator-service-motivator-service-5001"
+            ]
+          }
+        },
+        {
+          "From": "koda-proxy",
+          "To": "koda-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "motivator.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133",
+              "kratos-public.kratos.svc.cluster.local"
+            ],
+            "http.host": [
+              "motivator.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133",
               "kratos-public.kratos.svc.cluster.local"
             ],
             "http.method": [
-              "GET"
+              "GET",
+              "POST"
             ],
             "http.path": [
-              "/sessions/whoami"
+              "/moodivator",
+              "/",
+              "/sessions/whoami",
+              "/motivator"
             ],
             "http.status_code": [
               "200"
             ],
             "opencensus.same_process_as_parent_span": [
+              "false",
+              "true"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "traefik-proxy",
+          "Attributes": {
+            "direction": [
+              "outbound",
+              "inbound"
+            ],
+            "http.authority": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+              "motivator.api.dev.mindtastic.lol",
+              "kratos-public.kratos.svc.cluster.local"
+            ],
+            "http.host": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+              "motivator.api.dev.mindtastic.lol",
+              "kratos-public.kratos.svc.cluster.local",
+              "koda.koda.svc.cluster.local:4133"
+            ],
+            "http.method": [
+              "GET",
+              "POST"
+            ],
+            "http.path": [
+              "/decisions",
+              "/motivator",
+              "/sessions/whoami",
+              "/"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
               "false"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ]
+          }
+        },
+        {
+          "From": "traefik",
+          "To": "traefik-proxy",
+          "Attributes": {
+            "direction": [
+              "outbound",
+              "inbound"
+            ],
+            "http.authority": [
+              "motivator.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133",
+              "kratos-public.kratos.svc.cluster.local"
+            ],
+            "http.host": [
+              "motivator.api.dev.mindtastic.lol",
+              "kratos-public.kratos.svc.cluster.local",
+              "koda.koda.svc.cluster.local:4133"
+            ],
+            "http.method": [
+              "GET",
+              "POST"
+            ],
+            "http.path": [
+              "/moodivator",
+              "/motivator",
+              "/sessions/whoami",
+              "/"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "http.url": [
+              "/motivator",
+              "/moodivator"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false",
+              "true"
+            ],
+            "tilt.categories": [
+              "Motivator result"
+            ],
+            "tilt.legal_bases": [
+              "GDPR-99-1-a",
+              "GDPR-99-5-c",
+              "GDPR-99-22-e"
+            ],
+            "tilt.legitimate_interests": [
+              "[true true]",
+              "[]"
+            ],
+            "tilt.purposes": [
+              "To provide users with motivators in the service",
+              "To provide the users with statistics on their past performance using motivators",
+              "To provide users with custom generated motivators based on past mood"
+            ],
+            "tilt.storage_durations": [
+              "30 days",
+              "90 days"
+            ],
+            "traefik.router.name": [
+              "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "motivator-service-motivator-service-5001"
+            ]
+          }
+        },
+        {
+          "From": "kratos-proxy",
+          "To": "kratos-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "motivator.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133",
+              "kratos-public.kratos.svc.cluster.local"
+            ],
+            "http.host": [
+              "koda.koda.svc.cluster.local:4133",
+              "kratos-public.kratos.svc.cluster.local",
+              "motivator.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "POST",
+              "GET"
+            ],
+            "http.path": [
+              "/",
+              "/sessions/whoami",
+              "/motivator",
+              "/moodivator"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false",
+              "true"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "koda-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "kratos-public.kratos.svc.cluster.local",
+              "motivator.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133"
+            ],
+            "http.host": [
+              "kratos-public.kratos.svc.cluster.local",
+              "koda.koda.svc.cluster.local:4133",
+              "motivator.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET",
+              "POST"
+            ],
+            "http.path": [
+              "/sessions/whoami",
+              "/",
+              "/motivator",
+              "/moodivator"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ]
+          }
+        },
+        {
+          "From": "motivator-service-proxy",
+          "To": "motivator-service-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "motivator.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133",
+              "kratos-public.kratos.svc.cluster.local"
+            ],
+            "http.host": [
+              "motivator.api.dev.mindtastic.lol",
+              "kratos-public.kratos.svc.cluster.local",
+              "koda.koda.svc.cluster.local:4133"
+            ],
+            "http.method": [
+              "GET",
+              "POST"
+            ],
+            "http.path": [
+              "/sessions/whoami",
+              "/motivator",
+              "/",
+              "/moodivator"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "http.url": [
+              "/moodivator"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false",
+              "true"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "motivator-service-motivator-service-5001"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "motivator-service-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound",
+              "outbound"
+            ],
+            "http.authority": [
+              "koda.koda.svc.cluster.local:4133",
+              "motivator.api.dev.mindtastic.lol",
+              "kratos-public.kratos.svc.cluster.local"
+            ],
+            "http.host": [
+              "koda.koda.svc.cluster.local:4133",
+              "motivator.api.dev.mindtastic.lol",
+              "kratos-public.kratos.svc.cluster.local"
+            ],
+            "http.method": [
+              "POST",
+              "GET"
+            ],
+            "http.path": [
+              "/",
+              "/moodivator",
+              "/sessions/whoami",
+              "/motivator"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ]
+          }
+        }
+      ],
+      "RequestRate": 0,
+      "Attributes": {
+        "direction": [
+          "inbound"
+        ],
+        "http.authority": [
+          "motivator.api.dev.mindtastic.lol"
+        ],
+        "http.host": [
+          "motivator.api.dev.mindtastic.lol"
+        ],
+        "http.method": [
+          "GET"
+        ],
+        "http.path": [
+          "/motivator"
+        ],
+        "http.status_code": [
+          "200"
+        ],
+        "http.url": [
+          "/motivator"
+        ],
+        "opencensus.same_process_as_parent_span": [
+          "true"
+        ],
+        "traefik.router.name": [
+          "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
+        ],
+        "traefik.service.name": [
+          "motivator-service-motivator-service-5001"
+        ],
+        "tilt.categories": [
+          "Moodivator",
+          "Motivator result"
+        ],
+        "tilt.legal_bases": [
+          "GDPR-99-1-a",
+          "GDPR-100-1-c",
+          "GDPR-99-5-c",
+          "GDPR-99-22-e"
+        ],
+        "tilt.legitimate_interests": [
+          "[true true]",
+          "[]"
+        ],
+        "tilt.purposes": [
+          "To provide users with motivators based on their past mood",
+          "To provide analytics correllating past mood with motivator results",
+          "To provide users with motivators in the service",
+          "To provide the users with statistics on their past performance using motivators",
+          "To provide users with custom generated motivators based on past mood"
+        ],
+        "tilt.storage_durations": [
+          "30 days",
+          "30 days",
+          "90 days"
+        ]
+      }
+    },
+    "EntryPoint websecure users.api.dev.mindtastic.lol": {
+      "Edges": [
+        {
+          "From": "traefik",
+          "To": "traefik",
+          "Attributes": {
+            "direction": [
+              "outbound"
+            ],
+            "http.authority": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.host": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/decisions"
+            ],
+            "http.status_code": [
+              "401",
+              "200"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ]
+          }
+        },
+        {
+          "From": "user-service-proxy",
+          "To": "user-service-proxy",
+          "Attributes": {
+            "direction": [
+              "outbound"
+            ],
+            "http.authority": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
+            ],
+            "http.host": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+              "users.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/decisions"
+            ],
+            "http.status_code": [
+              "401",
+              "200"
+            ],
+            "http.url": [
+              "/user"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false"
+            ],
+            "traefik.router.name": [
+              "websecure-user-service-user-service-users-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "user-service-user-service-8000"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "kratos-proxy",
+          "Attributes": {
+            "direction": [
+              "inbound"
+            ],
+            "http.authority": [
+              "koda.koda.svc.cluster.local:4133"
+            ],
+            "http.host": [
+              "users.api.dev.mindtastic.lol",
+              "koda.koda.svc.cluster.local:4133"
+            ],
+            "http.method": [
+              "GET",
+              "POST"
+            ],
+            "http.path": [
+              "/"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "http.url": [
+              "/user"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-user-service-user-service-users-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "user-service-user-service-8000"
             ]
           }
         },
@@ -1333,16 +2245,16 @@
               "inbound"
             ],
             "http.authority": [
-              "koda.koda.svc.cluster.local:4133"
+              "kratos-public.kratos.svc.cluster.local"
             ],
             "http.host": [
-              "koda.koda.svc.cluster.local:4133"
+              "kratos-public.kratos.svc.cluster.local"
             ],
             "http.method": [
-              "POST"
+              "GET"
             ],
             "http.path": [
-              "/"
+              "/sessions/whoami"
             ],
             "http.status_code": [
               "200"
@@ -1389,20 +2301,44 @@
           "From": "traefik",
           "To": "traefik-proxy",
           "Attributes": {
+            "http.host": [
+              "users.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.status_code": [
+              "200"
+            ],
+            "http.url": [
+              "/user"
+            ],
+            "traefik.router.name": [
+              "websecure-user-service-user-service-users-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "user-service-user-service-8000"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
+          "To": "user-service-proxy",
+          "Attributes": {
             "direction": [
-              "outbound"
+              "inbound"
             ],
             "http.authority": [
-              "motivator.api.dev.mindtastic.lol"
+              "users.api.dev.mindtastic.lol"
             ],
             "http.host": [
-              "motivator.api.dev.mindtastic.lol"
+              "users.api.dev.mindtastic.lol"
             ],
             "http.method": [
               "GET"
             ],
             "http.path": [
-              "/moodivator"
+              "/user"
             ],
             "http.status_code": [
               "200"
@@ -1445,191 +2381,6 @@
         {
           "From": "traefik-proxy",
           "To": "koda-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.host": [
-              "koda.koda.svc.cluster.local:4133"
-            ],
-            "http.method": [
-              "POST"
-            ],
-            "http.path": [
-              "/"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        },
-        {
-          "From": "motivator-service-proxy",
-          "To": "motivator-service-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.authority": [
-              "motivator.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "motivator.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/moodivator"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "true"
-            ],
-            "tilt.categories": [
-              "Moodivator"
-            ],
-            "tilt.legal_bases": [
-              "GDPR-99-1-a"
-            ],
-            "tilt.legitimate_interests": [
-              "[true]"
-            ],
-            "tilt.purposes": [
-              "To provide the mood service with data"
-            ],
-            "tilt.storage_durations": [
-              "2022-07-05T07:31:42P3Y6M4DT12H30M17D"
-            ]
-          }
-        },
-        {
-          "From": "traefik-proxy",
-          "To": "motivator-service-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.authority": [
-              "motivator.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "motivator.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/moodivator"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        }
-      ],
-      "RequestRate": 0,
-      "Attributes": {
-        "direction": [
-          "inbound",
-          "outbound"
-        ],
-        "http.authority": [
-          "koda.koda.svc.cluster.local:4133",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-          "motivator.api.dev.mindtastic.lol",
-          "kratos-public.kratos.svc.cluster.local"
-        ],
-        "http.host": [
-          "motivator.api.dev.mindtastic.lol",
-          "kratos-public.kratos.svc.cluster.local",
-          "koda.koda.svc.cluster.local:4133",
-          "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
-        ],
-        "http.method": [
-          "GET",
-          "POST"
-        ],
-        "http.path": [
-          "/sessions/whoami",
-          "/",
-          "/decisions",
-          "/moodivator"
-        ],
-        "http.status_code": [
-          "200"
-        ],
-        "http.url": [
-          "/moodivator"
-        ],
-        "opencensus.same_process_as_parent_span": [
-          "false",
-          "true"
-        ],
-        "tilt.categories": [
-          "Moodivator"
-        ],
-        "tilt.legal_bases": [
-          "GDPR-99-1-a"
-        ],
-        "tilt.legitimate_interests": [
-          "[]",
-          "[true]"
-        ],
-        "tilt.purposes": [
-          "To provide the mood service with data"
-        ],
-        "tilt.storage_durations": [
-          "2022-07-05T07:31:42P3Y6M4DT12H30M17D"
-        ],
-        "traefik.router.name": [
-          "websecure-motivator-service-motivator-service-motivator-api-dev-mindtastic-lol@kubernetes"
-        ],
-        "traefik.service.name": [
-          "motivator-service-motivator-service-5001"
-        ]
-      }
-    },
-    "EntryPoint websecure users.api.dev.mindtastic.lol": {
-      "Edges": [
-        {
-          "From": "koda-proxy",
-          "To": "koda-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.authority": [
-              "koda.koda.svc.cluster.local:4133"
-            ],
-            "http.host": [
-              "koda.koda.svc.cluster.local:4133"
-            ],
-            "http.method": [
-              "POST"
-            ],
-            "http.path": [
-              "/"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "true"
-            ]
-          }
-        },
-        {
-          "From": "user-service-proxy",
-          "To": "user-service-proxy",
           "Attributes": {
             "direction": [
               "inbound"
@@ -1660,64 +2411,14 @@
               "BDSG-42-5"
             ],
             "tilt.legitimate_interests": [
-              "[false]"
+              "[true]"
             ],
             "tilt.purposes": [
-              "To provide the user-service-tilt"
+              "To store the user's preferences and notification settings",
+              "Sending push notifications with information"
             ],
             "tilt.storage_durations": [
               ""
-            ]
-          }
-        },
-        {
-          "From": "traefik",
-          "To": "traefik",
-          "Attributes": {
-            "http.host": [
-              "users.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "http.url": [
-              "/user"
-            ],
-            "traefik.router.name": [
-              "websecure-user-service-user-service-users-api-dev-mindtastic-lol@kubernetes"
-            ],
-            "traefik.service.name": [
-              "user-service-user-service-8000"
-            ]
-          }
-        },
-        {
-          "From": "kratos-proxy",
-          "To": "kratos-proxy",
-          "Attributes": {
-            "direction": [
-              "inbound"
-            ],
-            "http.authority": [
-              "kratos-public.kratos.svc.cluster.local"
-            ],
-            "http.host": [
-              "kratos-public.kratos.svc.cluster.local"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/sessions/whoami"
-            ],
-            "http.status_code": [
-              "200"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "true"
             ]
           }
         }
@@ -1725,35 +2426,26 @@
       "RequestRate": 0,
       "Attributes": {
         "direction": [
-          "inbound"
+          "outbound"
         ],
         "http.authority": [
-          "koda.koda.svc.cluster.local:4133",
-          "users.api.dev.mindtastic.lol",
-          "kratos-public.kratos.svc.cluster.local"
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
         ],
         "http.host": [
-          "koda.koda.svc.cluster.local:4133",
-          "users.api.dev.mindtastic.lol",
-          "kratos-public.kratos.svc.cluster.local"
+          "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
         ],
         "http.method": [
-          "POST",
           "GET"
         ],
         "http.path": [
-          "/",
-          "/user",
-          "/sessions/whoami"
+          "/decisions"
         ],
         "http.status_code": [
-          "200"
-        ],
-        "http.url": [
-          "/user"
+          "401"
         ],
         "opencensus.same_process_as_parent_span": [
-          "true"
+          "true",
+          "false"
         ],
         "tilt.categories": [
           "Language Preference"
@@ -1763,19 +2455,14 @@
           "BDSG-42-5"
         ],
         "tilt.legitimate_interests": [
-          "[false]"
+          "[true]"
         ],
         "tilt.purposes": [
-          "To provide the user-service-tilt"
+          "To store the user's preferences and notification settings",
+          "Sending push notifications with information"
         ],
         "tilt.storage_durations": [
-          ""
-        ],
-        "traefik.router.name": [
-          "websecure-user-service-user-service-users-api-dev-mindtastic-lol@kubernetes"
-        ],
-        "traefik.service.name": [
-          "user-service-user-service-8000"
+          "Until the account is deleted"
         ]
       }
     },
@@ -1783,9 +2470,100 @@
       "Edges": [
         {
           "From": "traefik-proxy",
+          "To": "wiki-service-proxy",
+          "Attributes": {
+            "direction": [
+              "outbound",
+              "inbound"
+            ],
+            "http.authority": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+              "wiki.api.dev.mindtastic.lol"
+            ],
+            "http.host": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+              "wiki.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/decisions",
+              "/wiki"
+            ],
+            "http.status_code": [
+              "404",
+              "200"
+            ],
+            "http.url": [
+              "/wiki"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "true",
+              "false"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-wiki-service-wiki-service-wiki-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "wiki-service-wiki-service-5001"
+            ]
+          }
+        },
+        {
+          "From": "traefik",
+          "To": "traefik",
+          "Attributes": {
+            "direction": [
+              "outbound",
+              "inbound"
+            ],
+            "http.authority": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+              "wiki.api.dev.mindtastic.lol"
+            ],
+            "http.host": [
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
+              "wiki.api.dev.mindtastic.lol"
+            ],
+            "http.method": [
+              "GET"
+            ],
+            "http.path": [
+              "/decisions",
+              "/wiki"
+            ],
+            "http.status_code": [
+              "404",
+              "200"
+            ],
+            "http.url": [
+              "/wiki"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false",
+              "true"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-wiki-service-wiki-service-wiki-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "wiki-service-wiki-service-5001"
+            ]
+          }
+        },
+        {
+          "From": "traefik-proxy",
           "To": "traefik-proxy",
           "Attributes": {
             "direction": [
+              "inbound",
               "outbound"
             ],
             "http.authority": [
@@ -1804,11 +2582,23 @@
               "/decisions"
             ],
             "http.status_code": [
-              "200",
-              "404"
+              "200"
+            ],
+            "http.url": [
+              "/wiki"
             ],
             "opencensus.same_process_as_parent_span": [
+              "true",
               "false"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-wiki-service-wiki-service-wiki-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "wiki-service-wiki-service-5001"
             ]
           }
         },
@@ -1817,43 +2607,36 @@
           "To": "traefik-proxy",
           "Attributes": {
             "direction": [
+              "inbound",
               "outbound"
             ],
             "http.authority": [
+              "wiki.api.dev.mindtastic.lol",
               "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
             ],
             "http.host": [
+              "wiki.api.dev.mindtastic.lol",
               "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
             ],
             "http.method": [
               "GET"
             ],
             "http.path": [
+              "/wiki",
               "/decisions"
-            ],
-            "http.status_code": [
-              "404"
-            ],
-            "opencensus.same_process_as_parent_span": [
-              "false"
-            ]
-          }
-        },
-        {
-          "From": "traefik",
-          "To": "traefik",
-          "Attributes": {
-            "http.host": [
-              "wiki.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
             ],
             "http.status_code": [
               "200"
             ],
             "http.url": [
               "/wiki"
+            ],
+            "opencensus.same_process_as_parent_span": [
+              "false",
+              "true"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
             ],
             "traefik.router.name": [
               "websecure-wiki-service-wiki-service-wiki-api-dev-mindtastic-lol@kubernetes"
@@ -1868,60 +2651,42 @@
           "To": "wiki-service-proxy",
           "Attributes": {
             "direction": [
+              "outbound",
               "inbound"
             ],
             "http.authority": [
-              "wiki.api.dev.mindtastic.lol"
+              "wiki.api.dev.mindtastic.lol",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
             ],
             "http.host": [
-              "wiki.api.dev.mindtastic.lol"
+              "wiki.api.dev.mindtastic.lol",
+              "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
             ],
             "http.method": [
               "GET"
             ],
             "http.path": [
-              "/wiki"
+              "/wiki",
+              "/decisions"
             ],
             "http.status_code": [
               "200"
             ],
-            "opencensus.same_process_as_parent_span": [
-              "true"
-            ],
-            "tilt.legitimate_interests": [
-              "[]"
-            ]
-          }
-        },
-        {
-          "From": "traefik-proxy",
-          "To": "wiki-service-proxy",
-          "Attributes": {
-            "direction": [
-              "outbound"
-            ],
-            "http.authority": [
-              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-              "wiki.api.dev.mindtastic.lol"
-            ],
-            "http.host": [
-              "oathkeeper-api.oathkeeper.svc.cluster.local:4456",
-              "wiki.api.dev.mindtastic.lol"
-            ],
-            "http.method": [
-              "GET"
-            ],
-            "http.path": [
-              "/decisions",
+            "http.url": [
               "/wiki"
-            ],
-            "http.status_code": [
-              "200",
-              "404"
             ],
             "opencensus.same_process_as_parent_span": [
               "true",
               "false"
+            ],
+            "tilt.legitimate_interests": [
+              "[]"
+            ],
+            "traefik.router.name": [
+              "websecure-wiki-service-wiki-service-wiki-api-dev-mindtastic-lol@kubernetes"
+            ],
+            "traefik.service.name": [
+              "wiki-service-wiki-service-5001"
             ]
           }
         }
@@ -1929,42 +2694,26 @@
       "RequestRate": 0,
       "Attributes": {
         "direction": [
-          "outbound",
-          "inbound"
+          "outbound"
         ],
         "http.authority": [
-          "wiki.api.dev.mindtastic.lol",
           "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
         ],
         "http.host": [
-          "wiki.api.dev.mindtastic.lol",
           "oathkeeper-api.oathkeeper.svc.cluster.local:4456"
         ],
         "http.method": [
           "GET"
         ],
         "http.path": [
-          "/wiki",
           "/decisions"
         ],
         "http.status_code": [
-          "200"
-        ],
-        "http.url": [
-          "/wiki"
+          "404"
         ],
         "opencensus.same_process_as_parent_span": [
-          "false",
-          "true"
-        ],
-        "tilt.legitimate_interests": [
-          "[]"
-        ],
-        "traefik.router.name": [
-          "websecure-wiki-service-wiki-service-wiki-api-dev-mindtastic-lol@kubernetes"
-        ],
-        "traefik.service.name": [
-          "wiki-service-wiki-service-5001"
+          "true",
+          "false"
         ]
       }
     }

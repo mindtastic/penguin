@@ -14,11 +14,17 @@ import DraggableNodeProvider from './DraggableNodeProvider';
 export interface ServiceMapProps {
   serviceMap: ServiceMapType;
   attributesToShow?: string[];
+  hightlightPath?: string;
   width?: number;
   height?: number;
 }
 
-const defaultProps = { width: 500, height: 500, attributesToShow: [] };
+const defaultProps = {
+  width: 500,
+  height: 500,
+  attributesToShow: [],
+  hightlightPath: '',
+};
 
 export function ServiceMap(props: ServiceMapProps) {
   const {
@@ -26,6 +32,7 @@ export function ServiceMap(props: ServiceMapProps) {
     width,
     height,
     attributesToShow,
+    hightlightPath,
   } = { ...defaultProps, ...props };
   const cssHeight = (height && height > 0) ? `${height}px` : `${defaultProps.height}px`;
   const cssWidth = (width && width > 0) ? `${width}px` : `${defaultProps.width}px`;
@@ -46,6 +53,8 @@ export function ServiceMap(props: ServiceMapProps) {
       <ServiceMapGraph
         serviceMap={serviceMap}
         attributesToShow={attributesToShow}
+        // eslint-disable-next-line react/destructuring-assignment
+        highlightPath={hightlightPath}
       />
       <DraggableNodeProvider />
       <ControlsContainer position="bottom-right">

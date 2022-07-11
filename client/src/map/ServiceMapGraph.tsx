@@ -8,14 +8,16 @@ import { has, snakeCase, startCase } from 'lodash';
 import buildGraphFromTraces from './graphBuilder';
 import { ServiceMap } from './types';
 import tilt from '../api/tilt';
+import Graph from 'graphology';
 
 type ServiceMapGraphProps = {
   serviceMap: ServiceMap;
   attributesToShow: string[];
+  highlightPath: string;
 };
 
 export function ServiceMapGraph(props: ServiceMapGraphProps) {
-  const { serviceMap, attributesToShow } = props;
+  const { serviceMap, attributesToShow, highlightPath } = props;
   const sigma = useSigma();
   const { positions } = useLayoutNoverlap();
 
@@ -60,21 +62,43 @@ export function ServiceMapGraph(props: ServiceMapGraphProps) {
       ...attr,
       label: (has(updateDict, edgeToUpdate)) ? updateDict[edgeToUpdate] : '',
     }));
-    // .forEach((res) => {
-    //   const edge = res.id.toString();
-    //   const label = res.arr.map((a) => `${startCase(attributeKeys[a[0]])}:
-    //                  ${a[1].join(',\n')}`).join('\n');
-    //   console.log(edge, label);
-    //   graph.updateEachEdgeAttributes((edgeToUpdate, attr) => ({
-    //     ...attr,
-    //     label,
-    //   }));
-    // });
   }, [attributesToShow]);
 
   useEffect(() => {
     animateNodes(sigma.getGraph(), positions(), { duration: 1000 });
   }, [positions, sigma]);
+
+  useEffect(() => {
+    console.log(highlightPath);
+    if (highlightPath === '') {
+      
+      return;
+    }
+
+    const path = serviceMap.Paths[highlightPath];
+    const graph = sigma.getGraph();
+    const edgesInPath = graph.edges()
+      .map((e) => parseInt(e, 10))
+      .map((edgeId) => {
+        const edge = serviceMap.Edges[edgeId];
+        const edgeInPath = path.Edges.filter((ex) => ex.To === edge.To && ex.From === edge.From);
+        if (edgeInPath.length > 0) {
+          return edgeId.toString();
+        }
+
+        return null;
+      })
+      .filter((e) => e);
+    graph.updateEachEdgeAttributes((edgeToUpdate, { color, ...attr }) => {
+      console.log(edgesInPath);
+      let obj = { ...attr };
+      if (edgesInPath.includes(edgeToUpdate)) {
+        obj.color = { color: 'black' };
+      } 
+      return obj;
+    });
+
+  }, [highlightPath]);
 
   return null;
 }
