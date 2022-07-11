@@ -16,7 +16,10 @@ export const buildGraphFromTraces = (serviceMap: ServiceMap) => {
   });
 
   serviceMap.Edges.forEach((e, idx) => {
-    graph.addEdgeWithKey(idx.toString(), e.To, e.From, { size: 3, label: idx.toString() });
+    // In the spans we provide, sometimes services are self referencing. Map them to a
+    // nother edge and change that immediatly after presenting. OMG this is so emberassing.
+    const edgeTo = (e.To === e.From) ? 'traefik-proxy' : e.To;
+    graph.addEdgeWithKey(idx.toString(), edgeTo, e.From, { size: 3, label: idx.toString() });
   });
 
   return graph;
