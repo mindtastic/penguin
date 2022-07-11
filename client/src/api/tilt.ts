@@ -4,7 +4,7 @@ export const tiltProperties = [
   'legalBases',
   'legitimateInterests',
   'recipients',
-  'storage',
+  'storageDurations',
   'nonDisclosure',
 ];
 

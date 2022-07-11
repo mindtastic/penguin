@@ -16,7 +16,7 @@ export const buildGraphFromTraces = (serviceMap: ServiceMap) => {
   });
 
   serviceMap.Edges.forEach((e, idx) => {
-    graph.addEdgeWithKey(idx.toString(), e.To, e.From, { size: 5 });
+    graph.addEdgeWithKey(idx.toString(), e.To, e.From, { size: 3, label: idx.toString() });
   });
 
   return graph;

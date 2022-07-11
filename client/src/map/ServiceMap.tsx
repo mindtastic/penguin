@@ -7,6 +7,7 @@ import { LayoutNoverlapControl } from '@react-sigma/layout-noverlap';
 // eslint-disable-next-line import/no-named-as-default
 import ServiceMapGraph from './ServiceMapGraph';
 import { ServiceMap as ServiceMapType } from './types';
+import { MultiDirectedGraph } from 'graphology';
 
 export interface ServiceMapProps {
   serviceMap: ServiceMapType;
@@ -30,6 +31,7 @@ export function ServiceMap(props: ServiceMapProps) {
   return (
     <SigmaContainer
       style={{ height: cssHeight, width: cssWidth }}
+      graph={MultiDirectedGraph}
       initialSettings={{
         allowInvalidContainer: true,
         enableEdgeHoverEvents: true,
